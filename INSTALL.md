@@ -7,4 +7,5 @@ cd build/
   make
 ```
 
-Have fun :smile:
+Have fun!
+:smile:
