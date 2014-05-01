@@ -21,7 +21,7 @@ void menu_show()
 int menu_wait()
 {
   menu_show();
-  
+
   int chosen_option;
   scanf("%d", &chosen_option);
 
