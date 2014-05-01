@@ -5,7 +5,7 @@ void menu_load()
   options[0] = "Reservar lavagem ou manutenção";
   options[1] = "Cancelar lavagem ou manutenção";
   options[2] = "Listar reservas e pré-reservas";
-  options[3] = "Listar informação do cliente";
+  options[3] = "Listar informação de um cliente";
 }
 
 void menu_show()
@@ -25,5 +25,9 @@ int menu_wait()
   int chosen_option;
   scanf("%d", &chosen_option);
 
-  return chosen_option;
+  if (chosen_option > 0 && chosen_option <= N_OPTIONS) {
+    return chosen_option;
+  }
+
+  return -1;
 }

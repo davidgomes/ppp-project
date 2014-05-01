@@ -3,7 +3,11 @@
 int main()
 {
   menu_load();
-  menu_wait();
+
+  int which_option;
+  do {
+    which_option = menu_wait();
+  } while (which_option <= 0);
 
   return 0;
 }
