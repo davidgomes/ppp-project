@@ -1,11 +1,13 @@
 #include "client.h"
 
-int client_create()
+client *client_create()
 {
-  return 1;
+  client *new_client = (client*) malloc(sizeof(client));
+  return new_client;
 }
 
-void client_print()
+void client_print(client *which)
 {
-
+  printf("Printing information on %s\n", which->name);
+  printf("%d\n", which->id);
 }

@@ -6,6 +6,7 @@ void menu_load()
   options[1] = "Cancelar lavagem ou manutenção";
   options[2] = "Listar reservas e pré-reservas";
   options[3] = "Listar informação de um cliente";
+  options[4] = "Sair do programa";
 }
 
 void menu_show()
