@@ -3,4 +3,4 @@
 #include "menu.h"
 #include "client.h"
 
-int main_loop();
+void main_loop();

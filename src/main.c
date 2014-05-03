@@ -1,13 +1,31 @@
 #include "main.h"
 
-int main_loop()
+void main_loop()
 {
   int which_option = -1;
 
   while (which_option != EXIT_OPTION)
   {
-    do {
+    do
+    {
       which_option = menu_wait();
+
+      if (which_option == 1)
+      {
+
+      }
+      else if (which_option == 2)
+      {
+
+      }
+      else if (which_option == 3)
+      {
+
+      }
+      else if (which_option == 4)
+      {
+        client_request_print();
+      }
     } while (which_option <= 0);
   }
 }
