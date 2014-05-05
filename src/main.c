@@ -34,6 +34,8 @@ int main()
 {
   client *david = client_create();
 
+  llist *client_list = llist_create();
+
   menu_load();
 
   main_loop();

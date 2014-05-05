@@ -5,7 +5,8 @@
 
 #define MAX_NAME_SIZE 128
 
-typedef struct {
+typedef struct
+{
   char name[MAX_NAME_SIZE];
   int id;
 
