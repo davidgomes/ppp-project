@@ -49,3 +49,33 @@ lnode *llist_find(llist *my_llist, void *value)
 {
   return _llist_find_rec(my_llist->root, value);
 }
+
+void llist_remove(llist *my_llist, void *value)
+{
+  my_llist->root = _llist_remove_rec(my_llist->root, value);
+}
+
+lnode *_llist_remove_rec(lnode *where, void *value)
+{
+    lnode *current;
+    
+    current = where;
+    
+    if (current == NULL)
+    {
+        return NULL;
+    }
+
+
+    if (current->next && current->next->value == value) // next exists and must be erased
+    {
+        lnode *deleteNode;
+        deleteNode = current->next;
+        current->next = deleteNode->next;  // Step 2: reassign current->next ptr
+        free (deleteNode);                 // Step 3: delete the node
+        return current;
+    }
+
+    where->next = _llist_remove_rec(where->next, value);
+
+}
