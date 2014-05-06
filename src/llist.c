@@ -61,7 +61,7 @@ lnode *_llist_remove_rec(lnode *where, void *value)
   {
     return NULL;
   }
-  
+
   if (where->next && where->next->value == value) 
   {
     lnode *delete_node = where->next;
@@ -69,6 +69,6 @@ lnode *_llist_remove_rec(lnode *where, void *value)
     free(delete_node);                
     return where;
   }
-  
+
   where->next = _llist_remove_rec(where->next, value);
 }
