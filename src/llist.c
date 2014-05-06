@@ -50,11 +50,6 @@ lnode *llist_find(llist *my_llist, void *value)
   return _llist_find_rec(my_llist->root, value);
 }
 
-void llist_remove(llist *my_llist, void *value)
-{
-  my_llist->root = _llist_remove_rec(my_llist->root, value);
-}
-
 lnode *_llist_remove_rec(lnode *where, void *value)
 {
   if (where == NULL)
@@ -71,4 +66,11 @@ lnode *_llist_remove_rec(lnode *where, void *value)
   }
 
   where->next = _llist_remove_rec(where->next, value);
+  return where;
 }
+
+void llist_remove(llist *my_llist, void *value)
+{
+  my_llist->root = _llist_remove_rec(my_llist->root, value);
+}
+
