@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "utils.h"
 
@@ -9,10 +10,9 @@ typedef struct client
 {
   char name[MAX_NAME_SIZE];
   int id;
-
-  struct client *next;
 } client;
 
-client *client_create();
+client *client_create(char*);
+
 void client_request_print();
 void client_print();

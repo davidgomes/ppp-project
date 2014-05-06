@@ -1,8 +1,9 @@
 #include "client.h"
 
-client *client_create()
+client *client_create(char *name)
 {
   client *new_client = (client*) malloc(sizeof(client));
+  strcpy(new_client->name, name);
   return new_client;
 }
 
