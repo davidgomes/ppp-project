@@ -24,7 +24,7 @@ void main_loop()
       }
       else if (which_option == 4)
       {
-        client_request_print();
+        client_request_print(client_list);
       }
     } while (which_option <= 0);
   }
@@ -39,14 +39,7 @@ int main()
   client_list = llist_new();
   llist_insert(client_list, david);
 
-  client *found = (client*) (llist_find(client_list, david)->value);
-
-  char find_name[] = "David Gomes";
-
-  printf("should be a 2: %d\n", client_find_by_name(client_list, find_name)->id);
-
   menu_load();
-
   main_loop();
 
   return 0;
