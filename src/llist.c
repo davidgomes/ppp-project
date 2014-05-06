@@ -57,20 +57,18 @@ void llist_remove(llist *my_llist, void *value)
 
 lnode *_llist_remove_rec(lnode *where, void *value)
 {
-  lnode *current = where;
-    
-  if (current == NULL)
+  if (where == NULL)
   {
     return NULL;
   }
   
-  if (current->next && current->next->value == value) 
+  if (where->next && where->next->value == value) 
   {
-    lnode *delete_Node = (current->next);
-    current->next = delete_Node->next;  
-    free(delete_Node);                
-    return current;
+    lnode *delete_node = (where->next);
+    where->next = delete_node->next;  
+    free(delete_node);                
+    return where;
   }
-
+  
     where->next = _llist_remove_rec(where->next, value);
 }
