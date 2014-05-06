@@ -34,9 +34,7 @@ void client_request_print(llist *client_list)
   get_input(request_str, client_name, MAX_NAME_SIZE);
 
   client *found_client = client_find_by_name(client_list, client_name);
-
-  printf("Found client %s:\n", client_name);
-  printf("ID: %d\n", found_client->id);
+  client_print(found_client);
 }
 
 void client_print(client *which)
