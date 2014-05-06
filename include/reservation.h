@@ -6,9 +6,9 @@
 
 #include "client.h"
 
-typedef struct {
+typedef struct reservation
+{
   client *owner;
-  struct reservation *next;
 } reservation;
 
 #endif

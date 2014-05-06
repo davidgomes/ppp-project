@@ -24,7 +24,12 @@ void main_loop()
       }
       else if (which_option == 4)
       {
-        client_request_print();
+        //int request_print_status = 0;
+
+        while (!client_request_print(client_list))
+        {
+          printf("Ocorreu um erro a ler o nome do cliente\n");
+        }
       }
     } while (which_option <= 0);
   }
@@ -33,20 +38,14 @@ void main_loop()
 int main()
 {
   char david_name[] = "David Gomes";
+  
   client *david = client_create(david_name);
   david->id = 2;
 
   client_list = llist_new();
   llist_insert(client_list, david);
 
-  client *found = (client*) (llist_find(client_list, david)->value);
-
-  char find_name[] = "David Gomes";
-
-  printf("should be a 2: %d\n", client_find_by_name(client_list, find_name)->id);
-
   menu_load();
-
   main_loop();
 
   return 0;

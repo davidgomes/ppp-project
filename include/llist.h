@@ -23,7 +23,10 @@ void llist_insert(llist*, void*);
 lnode *_llist_find_rec(lnode*, void*);
 lnode *llist_find(llist*, void*);
 
-lnode *_llist_remove_rec(lnode*, void*);
+lnode *_llist_remove_rec(lnode*, void*, llist*);
 void llist_remove(llist*, void*);
+
+int _llist_size_rec(lnode*, int);
+int llist_size(llist*);
 
 #endif

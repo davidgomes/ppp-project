@@ -27,15 +27,34 @@ client *client_find_by_name(llist *client_list, char *find_name)
   return _client_find_by_name_rec(client_list->root, find_name);
 }
 
-void client_request_print(llist *client_list)
+int client_request_print(llist *client_list)
 {
   char request_str[] = "Insira o nome do cliente: ";
   char client_name[MAX_NAME_SIZE];
-  get_input(request_str, client_name, MAX_NAME_SIZE);
+  get_str_input(request_str, client_name, MAX_NAME_SIZE);
+
+  client *found_client = client_find_by_name(client_list, client_name);
+
+  if (found_client == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return client_print(found_client);
+  }
 }
 
-void client_print(client *which)
+int client_print(client *which)
 {
+  if (which == NULL)
+  {
+    printf("Client não encontrado em client_print.\n");
+    return 0;
+  }
+  
   printf("Printing information on %s\n", which->name);
   printf("%d\n", which->id);
+
+  return 1;
 }

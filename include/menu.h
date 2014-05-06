@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "utils.h"
+
 #define N_OPTIONS 5
 #define EXIT_OPTION N_OPTIONS
 

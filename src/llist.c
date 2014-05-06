@@ -1,4 +1,5 @@
 #include "llist.h"
+#include <stdio.h>
 
 llist *llist_new()
 {
@@ -50,27 +51,49 @@ lnode *llist_find(llist *my_llist, void *value)
   return _llist_find_rec(my_llist->root, value);
 }
 
-lnode *_llist_remove_rec(lnode *where, void *value)
+lnode *_llist_remove_rec(lnode *where, void *value, llist *list)
 {
   if (where == NULL)
   {
     return NULL;
   }
 
+  if (where->value == value)
+  {
+    list->root = where->next;
+    free(where);
+    return list->root;
+  }
+
   if (where->next && where->next->value == value) 
   {
     lnode *delete_node = where->next;
     where->next = delete_node->next;  
-    free(delete_node);                
+    free(delete_node);
     return where;
   }
 
-  where->next = _llist_remove_rec(where->next, value);
-  return where;
+  return _llist_remove_rec(where->next, value, list);
 }
 
 void llist_remove(llist *my_llist, void *value)
 {
-  my_llist->root = _llist_remove_rec(my_llist->root, value);
+  my_llist->root = _llist_remove_rec(my_llist->root, value, my_llist);
 }
 
+int _llist_size_rec(lnode *where, int size)
+{
+  if (where == NULL)
+  {
+    return size;
+  }
+
+  return  _llist_size_rec(where->next, size + 1);
+}
+
+int llist_size(llist *my_llist)
+{
+  int size = 0;
+
+  return _llist_size_rec(my_llist->root,size);
+}
