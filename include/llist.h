@@ -1,13 +1,21 @@
 #include <stdlib.h>
 
-typedef struct
+typedef struct lnode
 {
-  void *root;
-} llist;
-
-typedef struct
-{
-  void *next;
+  struct lnode *next;
+  void *value;
 } lnode;
 
-llist *llist_create();
+typedef struct llist
+{
+  lnode *root;
+} llist;
+
+llist *llist_new();
+lnode *lnode_new(void *value);
+
+lnode *_llist_insert_rec(lnode*, void*);
+void llist_insert(llist*, void*);
+
+lnode *_llist_find_rec(lnode*, void*);
+lnode *llist_find(llist*, void*);

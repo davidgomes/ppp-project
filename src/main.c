@@ -33,8 +33,13 @@ void main_loop()
 int main()
 {
   client *david = client_create();
+  david->id = 2;
 
-  llist *client_list = llist_create();
+  llist *client_list = llist_new();
+  llist_insert(client_list, david);
+
+  client *found = (client*) (llist_find(client_list, david)->value);
+  printf("%d\n", found->id);
 
   menu_load();
 
