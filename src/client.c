@@ -19,7 +19,7 @@ client *_client_find_by_name_rec(lnode *where, char *find_name)
     return (client*) where->value;
   }
 
-  return client_find_by_name(where->next, find_name);
+  return _client_find_by_name_rec(where->next, find_name);
 }
 
 client *client_find_by_name(llist *client_list, char *find_name)
