@@ -70,5 +70,5 @@ lnode *_llist_remove_rec(lnode *where, void *value)
     return where;
   }
   
-    where->next = _llist_remove_rec(where->next, value);
+  where->next = _llist_remove_rec(where->next, value);
 }
