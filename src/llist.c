@@ -1,5 +1,4 @@
 #include "llist.h"
-#include <stdio.h>
 
 llist *llist_new()
 {
