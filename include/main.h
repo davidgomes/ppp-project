@@ -1,3 +1,6 @@
+#ifndef MAIN_HEADER
+#define MAIN_HEADER
+
 #include <stdio.h>
 #include <string.h>
 
@@ -10,4 +13,4 @@ llist *reservation_list;
 
 void main_loop();
 
-client *find_client_by_name();
+#endif

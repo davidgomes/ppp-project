@@ -1,20 +1,5 @@
 #include "main.h"
 
-client *client_find_by_name(lnode *where, char *find_name)
-{
-  if (where == NULL)
-  {
-    return NULL;
-  }
-
-  if (strcmp(((client*) where->value)->name, find_name) == 0)
-  {
-    return (client*) where->value;
-  }
-
-  return client_find_by_name(where->next, find_name);
-}
-
 void main_loop()
 {
   int which_option = -1;
@@ -58,7 +43,7 @@ int main()
 
   char find_name[] = "David Gomes";
 
-  printf("should be a 2: %d\n", client_find_by_name(client_list->root, find_name)->id);
+  printf("should be a 2: %d\n", client_find_by_name(client_list, find_name)->id);
 
   menu_load();
 

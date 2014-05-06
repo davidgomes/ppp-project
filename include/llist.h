@@ -1,3 +1,6 @@
+#ifndef LLIST_HEADER
+#define LLIST_HEADER
+
 #include <stdlib.h>
 
 typedef struct lnode
@@ -19,3 +22,5 @@ void llist_insert(llist*, void*);
 
 lnode *_llist_find_rec(lnode*, void*);
 lnode *llist_find(llist*, void*);
+
+#endif
