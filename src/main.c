@@ -24,7 +24,12 @@ void main_loop()
       }
       else if (which_option == 4)
       {
-        client_request_print(client_list);
+        //int request_print_status = 0;
+
+        while (!client_request_print(client_list))
+        {
+          printf("Ocorreu um erro a ler o nome do cliente\n");
+        }
       }
     } while (which_option <= 0);
   }

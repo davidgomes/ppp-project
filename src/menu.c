@@ -24,9 +24,10 @@ int menu_wait()
   menu_show();
 
   int chosen_option;
-  scanf("%d", &chosen_option);
+  get_int_input("Insira a sua opção: ", &chosen_option);
 
-  if (chosen_option > 0 && chosen_option <= N_OPTIONS) {
+  if (chosen_option > 0 && chosen_option <= N_OPTIONS)
+  {
     return chosen_option;
   }
 

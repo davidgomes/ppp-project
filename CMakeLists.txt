@@ -1,6 +1,6 @@
 set (PROJECT_NAME "ppp-project")
 
-set (CMAKE_CXX_FLAGS "-Werror -Wall -v -g")
+set (CMAKE_C_FLAGS "-Werror -Wall -g")
 
 project (${PROJECT_NAME})
 cmake_minimum_required (VERSION 2.8)
