@@ -16,7 +16,7 @@ typedef struct client
   int id;
 } client;
 
-client *client_create(char*);
+client *client_new(char*);
 
 client *_client_find_by_name_rec(lnode*, char*);
 client *client_find_by_name(llist*, char*);

@@ -6,6 +6,7 @@
 
 #include "menu.h"
 #include "client.h"
+#include "reservation.h"
 #include "llist.h"
 
 llist *client_list;
