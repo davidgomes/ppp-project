@@ -50,49 +50,43 @@ lnode *llist_find(llist *my_llist, void *value)
   return _llist_find_rec(my_llist->root, value);
 }
 
-lnode *_llist_remove_rec(lnode *where, void *value, llist *list)
+lnode *_llist_remove_rec(lnode *where, void *value)
 {
   if (where == NULL)
   {
-    return NULL;
+    return where;
   }
 
   if (where->value == value)
   {
-    list->root = where->next;
+    lnode *temp = where->next;
     free(where);
-    return list->root;
+    return temp;
   }
 
-  if (where->next && where->next->value == value) 
-  {
-    lnode *delete_node = where->next;
-    where->next = delete_node->next;  
-    free(delete_node);
-    return where;
-  }
+  where->next = _llist_remove_rec(where->next, value);
 
-  return _llist_remove_rec(where->next, value, list);
+  return where;
 }
 
 void llist_remove(llist *my_llist, void *value)
 {
-  my_llist->root = _llist_remove_rec(my_llist->root, value, my_llist);
+  my_llist->root = _llist_remove_rec(my_llist->root, value);
 }
 
-int _llist_size_rec(lnode *where, int size)
+int _llist_get_size_rec(lnode *where, int size)
 {
   if (where == NULL)
   {
     return size;
   }
 
-  return  _llist_size_rec(where->next, size + 1);
+  return  _llist_get_size_rec(where->next, size + 1);
 }
 
-int llist_size(llist *my_llist)
+int llist_get_size(llist *my_llist)
 {
   int size = 0;
 
-  return _llist_size_rec(my_llist->root,size);
+  return _llist_get_size_rec(my_llist->root,size);
 }
