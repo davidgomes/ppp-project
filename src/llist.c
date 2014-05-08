@@ -31,7 +31,7 @@ void llist_insert(llist *my_llist, void *value)
 }
 
 lnode *_llist_find_rec(lnode *where, void *find_value)
-{  
+{
   if (where == NULL)
   {
     return NULL;
