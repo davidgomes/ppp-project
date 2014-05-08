@@ -38,11 +38,18 @@ void main_loop()
 int main()
 {
   char david_name[] = "David Gomes";
+
   client *david = client_create(david_name);
   david->id = 2;
 
   client_list = llist_new();
   llist_insert(client_list, david);
+
+  printf("%d\n", llist_get_size(client_list));
+
+  llist_remove(client_list, david);
+
+  printf("%d\n", llist_get_size(client_list));
 
   menu_load();
   main_loop();
