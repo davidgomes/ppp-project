@@ -11,10 +11,11 @@ void reservation_print(reservation *which)
 {
   printf("Imprimindo reserva\n");
   printf("Cliente: %s\n", which->client->name);
+  printf("Registanda em : %s\n", ctime(&(which->register_time)));
 }
 
 void reservation_listing(lnode *where)
-{  
+{
   if (where == NULL)
   {
     return;
@@ -28,5 +29,21 @@ void reservation_listing(lnode *where)
 int reservation_request_listing(llist *reservation_list)
 {
   reservation_listing(reservation_list->root);
+  return 1;
+}
+
+int reservation_request_new(llist *reservation_list, llist *client_list)
+{
+  char request_client_name[MAX_NAME_SIZE];
+
+  get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
+
+  client *request_client;
+  request_client = client_find_by_name(client_list, request_client_name);
+
+  reservation *request_reservation = reservation_new(request_client);
+  request_reservation->register_time = time(NULL); //FIXME Ask for time
+  llist_insert(reservation_list, request_reservation);
+
   return 1;
 }

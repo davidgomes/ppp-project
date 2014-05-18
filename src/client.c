@@ -52,7 +52,7 @@ int client_print(client *which)
     printf("Client não encontrado em client_print.\n");
     return 0;
   }
-  
+
   printf("Printing information on %s\n", which->name);
   printf("%d\n", which->id);
 
