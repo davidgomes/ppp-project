@@ -14,7 +14,11 @@ void reservation_print(reservation *which)
 
   char register_time_str[MAX_TIME_CHARS];
   time_to_str(&(which->register_time), register_time_str);
-  printf("Registanda em : %s\n", register_time_str);
+  printf("Registada em: %s\n", register_time_str);
+
+  char actual_time_str[MAX_TIME_CHARS];
+  time_to_str(&(which->actual_time), actual_time_str);
+  printf("Data marcada: %s\n", actual_time_str);
 }
 
 void reservation_listing(lnode *where)
@@ -47,7 +51,14 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   request_client = client_find_by_name(client_list, request_client_name);
 
   reservation *request_reservation = reservation_new(request_client);
-  request_reservation->register_time = time(NULL); //FIXME Ask for time
+
+  /* Get the current date for the registration date */
+  time_t current_time = time(NULL);
+  time_t_to_xtime(&(request_reservation->register_time), &current_time);
+  
+  /* Ask for desired date for the reservation */
+  ask_date(&(request_reservation->actual_time));
+
   llist_insert(reservation_list, request_reservation);
 
   return 1;

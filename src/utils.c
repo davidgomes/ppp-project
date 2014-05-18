@@ -27,8 +27,34 @@ void get_int_input(char *say_what, int *save_where)
   *save_where = atoi(temp_buffer);
 }
 
-void time_to_str(time_t *which_time, char *save_where)
+void time_to_str(xtime *which_time, char *save_where)
 {
-  struct tm *time_info = localtime(which_time);
-  strftime(save_where, MAX_TIME_CHARS, "%F", time_info);
+  sprintf(save_where, "%2d/%2d/%4d, às %2d:%2d", which_time->day,
+                                                 which_time->month,
+                                                 which_time->year,
+                                                 which_time->hour,
+                                                 which_time->minute);
+}
+
+void ask_date(xtime *save_where)
+{
+  printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM\n");
+
+  scanf("%d/%d/%d %d:%d", &save_where->day,
+                          &save_where->month,
+                          &save_where->year,
+                          &save_where->hour,
+                          &save_where->minute);
+}
+
+void time_t_to_xtime(xtime *save_where, time_t *which_time)
+{
+  struct tm *current_time_info = localtime(which_time);
+
+  save_where->day = current_time_info->tm_mday;
+  save_where->month = current_time_info->tm_mon;
+  save_where->year = current_time_info->tm_year + 1900;
+
+  save_where->hour = current_time_info->tm_hour;
+  save_where->minute = current_time_info->tm_min;
 }

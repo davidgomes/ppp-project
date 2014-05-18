@@ -6,12 +6,13 @@
 
 #include "client.h"
 #include "llist.h"
+#include "xtime.h"
 
 typedef struct reservation
 {
   client *client;
-  time_t register_time;
-  time_t actual_time;
+  xtime register_time;
+  xtime actual_time;
 } reservation;
 
 reservation *reservation_new();
