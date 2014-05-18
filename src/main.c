@@ -11,7 +11,6 @@ void main_loop()
     do
     {
       which_option = menu_wait();
-      clear_screen();
 
       if (which_option == 1)
       {
@@ -28,6 +27,8 @@ void main_loop()
       }
       else if (which_option == 3)
       {
+        clear_screen();
+
         while (!reservation_request_listing(reservation_list))
         {
           printf("Ocorreu um erro a listar as reservas e pré-reservas.\n");

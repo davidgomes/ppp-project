@@ -29,11 +29,11 @@ void get_int_input(char *say_what, int *save_where)
 
 void time_to_str(xtime *which_time, char *save_where)
 {
-  sprintf(save_where, "%2d/%2d/%4d, às %2d:%2d", which_time->day,
-                                                 which_time->month,
-                                                 which_time->year,
-                                                 which_time->hour,
-                                                 which_time->minute);
+  sprintf(save_where, "%02d/%02d/%04d, às %02d:%02d", which_time->day,
+                                                      which_time->month,
+                                                      which_time->year,
+                                                      which_time->hour,
+                                                      which_time->minute);
 }
 
 void ask_date(xtime *save_where)
@@ -45,6 +45,8 @@ void ask_date(xtime *save_where)
                           &save_where->year,
                           &save_where->hour,
                           &save_where->minute);
+
+  getchar();
 }
 
 void time_t_to_xtime(xtime *save_where, time_t *which_time)
