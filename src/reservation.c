@@ -9,7 +9,6 @@ reservation *reservation_new(client *client)
 
 void reservation_print(reservation *which)
 {
-  printf("Imprimindo reserva\n");
   printf("Cliente: %s\n", which->client->name);
 
   char register_time_str[MAX_TIME_CHARS];
@@ -21,23 +20,24 @@ void reservation_print(reservation *which)
   printf("Data marcada: %s\n", actual_time_str);
 }
 
-void reservation_listing(lnode *where)
+void reservation_listing(lnode *where, int index)
 {
   if (where == NULL)
   {
     return;
   }
 
+  printf("Imprimindo reserva número %d\n", index);
   reservation_print((reservation*) where->value);
 
   printf("\n");
 
-  reservation_listing(where->next);
+  reservation_listing(where->next, index + 1);
 }
 
 int reservation_request_listing(llist *reservation_list)
 {
-  reservation_listing(reservation_list->root);
+  reservation_listing(reservation_list->root, 1);
   return 1;
 }
 
@@ -55,7 +55,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   /* Get the current date for the registration date */
   time_t current_time = time(NULL);
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
-  
+
   /* Ask for desired date for the reservation */
   ask_date(&(request_reservation->actual_time));
 

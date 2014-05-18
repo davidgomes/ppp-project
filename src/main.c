@@ -20,6 +20,8 @@ void main_loop()
         }
 
         clear_screen();
+
+        printf("Reserva adicionada com sucesso.\n");
       }
       else if (which_option == 2)
       {

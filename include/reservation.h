@@ -18,7 +18,7 @@ typedef struct reservation
 reservation *reservation_new();
 
 void reservation_print(reservation*);
-void reservation_listing(lnode*);
+void reservation_listing(lnode*, int);
 int reservation_request_listing(llist*);
 int reservation_request_new(llist*, llist*);
 
