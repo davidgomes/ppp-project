@@ -27,7 +27,7 @@ void reservation_listing(lnode *where, int index)
     return;
   }
 
-  printf("Imprimindo reserva número %d\n", index);
+  printf("Listando reserva número %d\n", index);
   reservation_print((reservation*) where->value);
 
   printf("\n");
@@ -50,6 +50,11 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
 
+  if (request_client == NULL)
+  {
+    request_client = client_new(request_client_name);
+  }
+
   reservation *request_reservation = reservation_new(request_client);
 
   /* Get the current date for the registration date */
@@ -60,6 +65,22 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   ask_date(&(request_reservation->actual_time));
 
   llist_insert(reservation_list, request_reservation);
+
+  return 1;
+}
+
+int reservation_request_cancel(llist *reservation_list)
+{
+  printf("Listando todas as reservas.\n\n");
+
+  clear_screen();
+  reservation_request_listing(reservation_list);
+
+  int which_reservation;
+  get_int_input("Insira o número da reserva que deseja cancelar: ",
+                &which_reservation);
+
+
 
   return 1;
 }

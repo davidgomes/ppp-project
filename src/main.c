@@ -21,11 +21,18 @@ void main_loop()
 
         clear_screen();
 
-        printf("Reserva adicionada com sucesso.\n");
+        printf("Reserva adicionada com sucesso.\n\n");
       }
       else if (which_option == 2)
       {
+        while (!reservation_request_cancel(reservation_list))
+        {
+          printf("Ocorreu um erro a cancelar uma reserva.\n");
+        }
 
+        clear_screen();
+
+        printf("Reserva cancelada com sucesso.\n\n");
       }
       else if (which_option == 3)
       {
@@ -49,13 +56,7 @@ void main_loop()
 
 int main()
 {
-  char david_name[] = "David Gomes";
-  client *david = client_new(david_name);
-  david->id = 2;
-
   client_list = llist_new();
-  llist_insert(client_list, david);
-
   reservation_list = llist_new();
 
   menu_load();

@@ -54,7 +54,7 @@ void time_t_to_xtime(xtime *save_where, time_t *which_time)
   struct tm *current_time_info = localtime(which_time);
 
   save_where->day = current_time_info->tm_mday;
-  save_where->month = current_time_info->tm_mon;
+  save_where->month = current_time_info->tm_mon + 1;
   save_where->year = current_time_info->tm_year + 1900;
 
   save_where->hour = current_time_info->tm_hour;
