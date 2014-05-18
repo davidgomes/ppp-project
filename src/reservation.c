@@ -53,6 +53,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   if (request_client == NULL)
   {
     request_client = client_new(request_client_name);
+    llist_insert(client_list, request_client);
   }
 
   reservation *request_reservation = reservation_new(request_client);
