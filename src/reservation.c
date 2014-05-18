@@ -11,7 +11,10 @@ void reservation_print(reservation *which)
 {
   printf("Imprimindo reserva\n");
   printf("Cliente: %s\n", which->client->name);
-  printf("Registanda em : %s\n", ctime(&(which->register_time)));
+
+  char register_time_str[MAX_TIME_CHARS];
+  time_to_str(&(which->register_time), register_time_str);
+  printf("Registanda em : %s\n", register_time_str);
 }
 
 void reservation_listing(lnode *where)
@@ -22,6 +25,8 @@ void reservation_listing(lnode *where)
   }
 
   reservation_print((reservation*) where->value);
+
+  printf("\n");
 
   reservation_listing(where->next);
 }

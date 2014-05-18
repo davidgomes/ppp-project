@@ -4,12 +4,14 @@ void main_loop()
 {
   int which_option = -1;
 
+  clear_screen();
+
   while (which_option != EXIT_OPTION)
   {
     do
     {
-      printf("There are currently %d reservations.\n", llist_get_size(reservation_list));
       which_option = menu_wait();
+      clear_screen();
 
       if (which_option == 1)
       {
@@ -17,6 +19,8 @@ void main_loop()
         {
           printf("Ocorreu um erro a adicionar uma nova reserva.\n");
         }
+
+        clear_screen();
       }
       else if (which_option == 2)
       {
@@ -49,10 +53,7 @@ int main()
   client_list = llist_new();
   llist_insert(client_list, david);
 
-  reservation *first_job = reservation_new(david);
-
   reservation_list = llist_new();
-  llist_insert(reservation_list, first_job);
 
   menu_load();
   main_loop();
