@@ -89,7 +89,7 @@ void llist_remove_by_index(llist* which_llist, int index)
     }
   }
 
-  printf("%p\n", aux->value);
+  llist_remove(which_llist, aux->value);
 }
 
 int _llist_get_size_rec(lnode *where, int size)

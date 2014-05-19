@@ -37,6 +37,18 @@ void reservation_listing(lnode *where, int index)
 
 int reservation_request_listing(llist *reservation_list)
 {
+  char which_order_str[5];
+  get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ", which_order_str, 5);
+
+  if (strcmp(which_order_str, "R") == 0)
+  {
+    //revervation_sort(reservation_list, 1);
+  }
+  else if (strcmp(which_order_str, "A") == 0)
+  {
+    //revervation_sort(reservation_list, 1);
+  }
+  
   reservation_listing(reservation_list->root, 1);
   return 1;
 }
@@ -44,7 +56,6 @@ int reservation_request_listing(llist *reservation_list)
 int reservation_request_new(llist *reservation_list, llist *client_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-
   get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
 
   client *request_client;
@@ -93,3 +104,4 @@ int reservation_request_cancel(llist *reservation_list)
 
   return 1;
 }
+
