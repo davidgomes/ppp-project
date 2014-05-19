@@ -10,7 +10,6 @@
 
 typedef struct reservation
 {
-  int id;
   client *client;
   xtime register_time;
   xtime actual_time;
