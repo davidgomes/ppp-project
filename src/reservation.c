@@ -42,11 +42,11 @@ int reservation_request_listing(llist *reservation_list)
 
   if (strcmp(which_order_str, "R") == 0)
   {
-    reservation_sort(reservation_list);
+    reservation_sort(reservation_list, 1);
   }
   else if (strcmp(which_order_str, "A") == 0)
   {
-    //revervation_sort(reservation_list, 1);
+    reservation_sort(reservation_list, 0);
   }
 
   reservation_listing(reservation_list->root, 1);
@@ -180,32 +180,57 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
   fclose(fp);
 }
 
-lnode *_reservation_sort_rec(lnode *start)
+lnode *_reservation_sort_rec(lnode *start, int order)
 {
   if (start == NULL)
   {
     return NULL;
   }
 
-  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
-                                        &(((reservation*) start->next->value)->actual_time)))
+  // FIXME This code is awful
+
+  if (order)
   {
-    start = _llist_swap(start, start->next );
+    if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                          &(((reservation*) start->next->value)->actual_time)) > 0)
+    {
+      start = _llist_swap(start, start->next);
+    }
+  }
+  else
+  {
+    if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                          &(((reservation*) start->next->value)->actual_time)) < 0)
+    {
+      start = _llist_swap(start, start->next );
+    }
   }
 
-  start->next = _reservation_sort_rec(start->next);
+  start->next = _reservation_sort_rec(start->next, order);
 
-  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
-                                        &(((reservation*) start->next->value)->actual_time)))
+  if (order)
   {
-    start = _llist_swap(start, start->next);
-    start->next = _reservation_sort_rec(start->next);
+    if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                          &(((reservation*) start->next->value)->actual_time)) > 0)
+    {
+      start = _llist_swap(start, start->next);
+      start->next = _reservation_sort_rec(start->next, order);
+    }
+  }
+  else
+  {
+    if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                          &(((reservation*) start->next->value)->actual_time)) < 0)
+    {
+      start = _llist_swap(start, start->next);
+      start->next = _reservation_sort_rec(start->next, order);
+    }
   }
 
   return start;
 }
 
-void reservation_sort(llist *reservation_list)
+void reservation_sort(llist *reservation_list, int order)
 {
-  reservation_list->root = _reservation_sort_rec(reservation_list->root);
+  reservation_list->root = _reservation_sort_rec(reservation_list->root, order);
 }
