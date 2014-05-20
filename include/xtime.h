@@ -8,7 +8,6 @@ typedef struct xtime {
   int hour, minute;
 } xtime;
 
-int xtime_smaller(xtime*, xtime*);
 int xtime_comp(xtime*, xtime*);
 
 #endif
