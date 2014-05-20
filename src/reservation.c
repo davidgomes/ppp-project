@@ -125,8 +125,7 @@ void write_reservations(char *file, lnode *where)
   while (where != NULL)
   {
     aux = where->value;
-    fprintf(fp, "%s, %d, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
-            aux->id,
+    fprintf(fp, "%s, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
@@ -160,8 +159,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
   {
     client = client_find_by_name(client_list, client_name);
     reservation = reservation_new(client);
-    fscanf(fp, "%d, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", &(reservation->id),
-           &(reservation->register_time.day),
+    fscanf(fp, "%d/%d/%d %d:%d, %d/%d/%d %d:%d\n", &(reservation->register_time.day),
            &(reservation->register_time.month),
            &(reservation->register_time.year),
            &(reservation->register_time.hour),
@@ -173,6 +171,8 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
            &(reservation->actual_time.minute));
     llist_insert(reservation_list, reservation);
   }
+  fclose(fp);
+}
 
 lnode *_reservation_sort_rec(lnode *start)
 {
@@ -203,4 +203,5 @@ lnode *_reservation_sort_rec(lnode *start)
 void reservation_sort(llist *reservation_list)
 {
   reservation_list->root = _reservation_sort_rec(reservation_list->root);
+
 }

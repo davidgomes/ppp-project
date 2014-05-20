@@ -98,5 +98,6 @@ void read_client(char *file, llist *myllist)
     client->id = client_id;
     llist_insert(myllist, client);
   }
+  fclose(fp);
 }
 
