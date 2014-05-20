@@ -115,16 +115,17 @@ void write_reservations(char *file, lnode *where)
 {
   FILE *fp;
   reservation *aux;
-  
-  if ( (fp = fopen(file, "w")) == NULL)
+
+  if ((fp = fopen(file, "w")) == NULL)
   {
     fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
     return;
   }
-  
+
   while (where != NULL)
   {
     aux = where->value;
+
     fprintf(fp, "%s, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
             aux->register_time.day,
             aux->register_time.month,
@@ -136,9 +137,10 @@ void write_reservations(char *file, lnode *where)
             aux->actual_time.year,
             aux->actual_time.hour,
             aux->actual_time.minute);
+
     where = where->next;
   }
-  
+
   fclose(fp);
 }
 
@@ -149,16 +151,17 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
   client *client;
   char client_name[MAX_NAME_SIZE];
 
-  if ((fp =fopen(file,"r")) == NULL)
+  if ((fp = fopen(file, "r")) == NULL)
   {
     fprintf(stderr, "Ocorreu um erro");
-    return ;
+    return;
   }
 
   while (fscanf(fp, "%[^,],", client_name) == 1)
   {
     client = client_find_by_name(client_list, client_name);
     reservation = reservation_new(client);
+
     fscanf(fp, "%d/%d/%d %d:%d, %d/%d/%d %d:%d\n", &(reservation->register_time.day),
            &(reservation->register_time.month),
            &(reservation->register_time.year),
@@ -169,6 +172,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
            &(reservation->actual_time.year),
            &(reservation->actual_time.hour),
            &(reservation->actual_time.minute));
+
     llist_insert(reservation_list, reservation);
   }
   fclose(fp);
@@ -203,5 +207,4 @@ lnode *_reservation_sort_rec(lnode *start)
 void reservation_sort(llist *reservation_list)
 {
   reservation_list->root = _reservation_sort_rec(reservation_list->root);
-
 }
