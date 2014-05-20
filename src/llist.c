@@ -108,3 +108,11 @@ int llist_get_size(llist *which_llist)
 
   return _llist_get_size_rec(which_llist->root,size);
 }
+
+lnode *_llist_swap(lnode *l1, lnode *l2)
+{
+  l1->next = l2->next;
+  l2->next = l1;
+
+  return l2;
+}

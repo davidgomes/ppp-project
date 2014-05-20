@@ -32,4 +32,6 @@ void llist_remove_by_index(llist*, int);
 int _llist_get_size_rec(lnode*, int);
 int llist_get_size(llist*);
 
+lnode *_llist_swap(lnode *, lnode *);
+
 #endif

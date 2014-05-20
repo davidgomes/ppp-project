@@ -42,7 +42,7 @@ int reservation_request_listing(llist *reservation_list)
 
   if (strcmp(which_order_str, "R") == 0)
   {
-    //revervation_sort(reservation_list, 1);
+    reservation_sort(reservation_list);
   }
   else if (strcmp(which_order_str, "A") == 0)
   {
@@ -109,4 +109,35 @@ int reservation_request_cancel(llist *reservation_list)
   llist_remove_by_index(reservation_list, which_reservation - 1);
 
   return 1;
+}
+
+lnode *_reservation_sort_rec(lnode *start)
+{
+  if (start == NULL)
+  {
+    return NULL;
+  }
+
+  /* First push the larger items down */
+  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                        &(((reservation*) start->next->value)->actual_time)))
+  {
+    start = _llist_swap(start, start->next );
+  }
+
+  start->next = _reservation_sort_rec(start->next);
+
+  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                        &(((reservation*) start->next->value)->actual_time)))
+  {
+    start = _llist_swap(start, start->next);
+    start->next = _reservation_sort_rec(start->next);
+  }
+
+  return start;
+}
+
+void reservation_sort(llist *reservation_list)
+{
+  reservation_list->root = _reservation_sort_rec(reservation_list->root);
 }
