@@ -94,7 +94,6 @@ void read_client(char *file, llist *myllist)
 
   while (fscanf(fp, "%[^,], %d\n", client_name, &client_id) == 2)
   {
-    printf("coco\n");
     client = client_new(client_name);
     client->id = client_id;
     llist_insert(myllist, client);
