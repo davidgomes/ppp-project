@@ -1,6 +1,7 @@
 #ifndef LLIST_HEADER
 #define LLIST_HEADER
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -28,7 +29,11 @@ lnode *llist_find(llist*, void*);
 lnode *_llist_remove_rec(lnode*, void*);
 void llist_remove(llist*, void*);
 
+void llist_remove_by_index(llist*, int);
+
 int _llist_get_size_rec(lnode*, int);
 int llist_get_size(llist*);
+
+lnode *_llist_swap(lnode *, lnode *);
 
 #endif

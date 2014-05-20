@@ -26,9 +26,9 @@ lnode *_llist_insert_rec(lnode *where, void *value)
   return where;
 }
 
-void llist_insert(llist *my_llist, void *value)
+void llist_insert(llist *which_llist, void *value)
 {
-  my_llist->root = _llist_insert_rec(my_llist->root, value);
+  which_llist->root = _llist_insert_rec(which_llist->root, value);
 }
 
 lnode *_llist_find_rec(lnode *where, void *find_value)
@@ -46,9 +46,9 @@ lnode *_llist_find_rec(lnode *where, void *find_value)
   return _llist_find_rec(where->next, find_value);
 }
 
-lnode *llist_find(llist *my_llist, void *value)
+lnode *llist_find(llist *which_llist, void *value)
 {
-  return _llist_find_rec(my_llist->root, value);
+  return _llist_find_rec(which_llist->root, value);
 }
 
 lnode *_llist_remove_rec(lnode *where, void *value)
@@ -70,9 +70,27 @@ lnode *_llist_remove_rec(lnode *where, void *value)
   return where;
 }
 
-void llist_remove(llist *my_llist, void *value)
+void llist_remove(llist *which_llist, void *value)
 {
-  my_llist->root = _llist_remove_rec(my_llist->root, value);
+  which_llist->root = _llist_remove_rec(which_llist->root, value);
+}
+
+void llist_remove_by_index(llist* which_llist, int index)
+{
+  int i = 0;
+
+  lnode *aux = which_llist->root;
+  for (i = 0; i < index; i++)
+  {
+    aux = aux->next;
+
+    if (aux == NULL)
+    {
+      return;
+    }
+  }
+
+  llist_remove(which_llist, aux->value);
 }
 
 int _llist_get_size_rec(lnode *where, int size)
@@ -82,12 +100,20 @@ int _llist_get_size_rec(lnode *where, int size)
     return size;
   }
 
-  return  _llist_get_size_rec(where->next, size + 1);
+  return _llist_get_size_rec(where->next, size + 1);
 }
 
-int llist_get_size(llist *my_llist)
+int llist_get_size(llist *which_llist)
 {
   int size = 0;
 
-  return _llist_get_size_rec(my_llist->root,size);
+  return _llist_get_size_rec(which_llist->root,size);
+}
+
+lnode *_llist_swap(lnode *l1, lnode *l2)
+{
+  l1->next = l2->next;
+  l2->next = l1;
+
+  return l2;
 }

@@ -10,7 +10,6 @@
 
 typedef struct reservation
 {
-  int id;
   client *client;
   xtime register_time;
   xtime actual_time;
@@ -19,12 +18,20 @@ typedef struct reservation
 reservation *reservation_new();
 
 void reservation_print(reservation*);
+
 void reservation_listing(lnode*, int);
 int reservation_request_listing(llist*);
+
 int reservation_request_new(llist*, llist*);
+
 int reservation_request_cancel(llist*);
 
+<<<<<<< HEAD
 void write_reservations(char*, lnode*);
 void read_reservation(char*, llist*, llist*);
+=======
+lnode *_reservation_sort_rec(lnode*);
+void reservation_sort(llist*);
+>>>>>>> acded5ad787a623f577507e087a09fe9440953cc
 
 #endif

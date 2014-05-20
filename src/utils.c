@@ -38,7 +38,16 @@ void time_to_str(xtime *which_time, char *save_where)
 
 void ask_date(xtime *save_where)
 {
-  printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM\n");
+  // Debug
+  time_t current_time = time(NULL);
+  xtime current_xtime;
+  char current_time_str[MAX_TIME_CHARS];
+  time_t_to_xtime(&current_xtime, &current_time);
+  time_to_str(&current_xtime, current_time_str);
+
+  printf("São agora %s\n", current_time_str);
+
+  printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM: ");
 
   scanf("%d/%d/%d %d:%d", &save_where->day,
                           &save_where->month,
@@ -52,7 +61,6 @@ void ask_date(xtime *save_where)
 void time_t_to_xtime(xtime *save_where, time_t *which_time)
 {
   struct tm *current_time_info = localtime(which_time);
-
   save_where->day = current_time_info->tm_mday;
   save_where->month = current_time_info->tm_mon + 1;
   save_where->year = current_time_info->tm_year + 1900;

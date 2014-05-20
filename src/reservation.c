@@ -37,6 +37,18 @@ void reservation_listing(lnode *where, int index)
 
 int reservation_request_listing(llist *reservation_list)
 {
+  char which_order_str[5];
+  get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ", which_order_str, 5);
+
+  if (strcmp(which_order_str, "R") == 0)
+  {
+    reservation_sort(reservation_list);
+  }
+  else if (strcmp(which_order_str, "A") == 0)
+  {
+    //revervation_sort(reservation_list, 1);
+  }
+
   reservation_listing(reservation_list->root, 1);
   return 1;
 }
@@ -44,7 +56,6 @@ int reservation_request_listing(llist *reservation_list)
 int reservation_request_new(llist *reservation_list, llist *client_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-
   get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
 
   client *request_client;
@@ -65,7 +76,15 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   /* Ask for desired date for the reservation */
   ask_date(&(request_reservation->actual_time));
 
+  if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
+  {
+    printf("Não pode reservar para o passado.\n");
+    return 0;
+  }
+
   llist_insert(reservation_list, request_reservation);
+
+  printf("%p\n", request_client);
 
   return 1;
 }
@@ -74,18 +93,25 @@ int reservation_request_cancel(llist *reservation_list)
 {
   printf("Listando todas as reservas.\n\n");
 
-  clear_screen();
   reservation_request_listing(reservation_list);
 
   int which_reservation;
   get_int_input("Insira o número da reserva que deseja cancelar: ",
                 &which_reservation);
 
+  if (which_reservation > llist_get_size(reservation_list) ||
+      which_reservation < 1)
+  {
+    printf("Não existe um item correspondente ao número que escolheu.\n");
+    return 0;
+  }
 
+  llist_remove_by_index(reservation_list, which_reservation - 1);
 
   return 1;
 }
 
+<<<<<<< HEAD
 void write_reservations(char *file, lnode *where)
 {
   FILE *fp;
@@ -148,4 +174,35 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
            &(reservation->actual_time.minute));
     llist_insert(reservation_list, reservation);
   }
+=======
+lnode *_reservation_sort_rec(lnode *start)
+{
+  if (start == NULL)
+  {
+    return NULL;
+  }
+
+  /* First push the larger items down */
+  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                        &(((reservation*) start->next->value)->actual_time)))
+  {
+    start = _llist_swap(start, start->next );
+  }
+
+  start->next = _reservation_sort_rec(start->next);
+
+  if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
+                                        &(((reservation*) start->next->value)->actual_time)))
+  {
+    start = _llist_swap(start, start->next);
+    start->next = _reservation_sort_rec(start->next);
+  }
+
+  return start;
+}
+
+void reservation_sort(llist *reservation_list)
+{
+  reservation_list->root = _reservation_sort_rec(reservation_list->root);
+>>>>>>> acded5ad787a623f577507e087a09fe9440953cc
 }
