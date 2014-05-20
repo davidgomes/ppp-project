@@ -26,7 +26,12 @@ int reservation_request_new(llist*, llist*);
 
 int reservation_request_cancel(llist*);
 
+
+void write_reservations(char*, lnode*);
+void read_reservation(char*, llist*, llist*);
+
 lnode *_reservation_sort_rec(lnode*);
 void reservation_sort(llist*);
+
 
 #endif

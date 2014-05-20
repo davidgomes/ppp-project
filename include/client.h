@@ -24,4 +24,7 @@ client *client_find_by_name(llist*, char*);
 int client_request_print(llist*);
 int client_print();
 
+void write_client(char*, lnode*);
+void read_client(char*, llist*);
+
 #endif

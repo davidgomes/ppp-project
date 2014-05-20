@@ -5,7 +5,7 @@ void main_loop()
   int which_option = -1;
 
   clear_screen();
-
+  
   while (which_option != EXIT_OPTION)
   {
     do
@@ -59,8 +59,14 @@ int main()
   client_list = llist_new();
   reservation_list = llist_new();
 
+  read_client("clients.txt", client_list);
+  read_reservation("reservations.txt", client_list, reservation_list);
+  
   menu_load();
   main_loop();
+
+  write_client("clients.txt", client_list->root);
+  write_reservations("reservations.txt", reservation_list->root);
 
   return 0;
 }

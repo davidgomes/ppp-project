@@ -1,4 +1,5 @@
 #include "llist.h"
+#include "client.h"
 
 llist *llist_new()
 {
