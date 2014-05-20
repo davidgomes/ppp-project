@@ -9,5 +9,6 @@ typedef struct xtime {
 } xtime;
 
 int xtime_smaller(xtime*, xtime*);
+int xtime_comp(xtime*, xtime*);
 
 #endif

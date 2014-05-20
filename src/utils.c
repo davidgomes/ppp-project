@@ -46,7 +46,7 @@ void ask_date(xtime *save_where)
   time_to_str(&current_xtime, current_time_str);
 
   printf("São agora %s\n", current_time_str);
-  
+
   printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM: ");
 
   scanf("%d/%d/%d %d:%d", &save_where->day,

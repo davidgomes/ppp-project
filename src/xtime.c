@@ -49,3 +49,12 @@ int xtime_smaller(xtime *a, xtime *b) // is a smaller than b
 
   return 0;
 }
+
+int xtime_comp(xtime *a, xtime *b) // returns (a - b)
+{
+  return (a->year - b->year +
+          a->month - b->month +
+          a->day - b->day +
+          a->hour - b->hour +
+          a->minute - b->minute);
+}

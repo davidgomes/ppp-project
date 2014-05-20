@@ -48,7 +48,7 @@ int reservation_request_listing(llist *reservation_list)
   {
     //revervation_sort(reservation_list, 1);
   }
-  
+
   reservation_listing(reservation_list->root, 1);
   return 1;
 }
@@ -76,7 +76,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   /* Ask for desired date for the reservation */
   ask_date(&(request_reservation->actual_time));
 
-  if (xtime_smaller(&(request_reservation->actual_time), &(request_reservation->register_time)))
+  if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
     printf("Não pode reservar para o passado.\n");
     return 0;
@@ -93,15 +93,20 @@ int reservation_request_cancel(llist *reservation_list)
 {
   printf("Listando todas as reservas.\n\n");
 
-  clear_screen();
   reservation_request_listing(reservation_list);
 
   int which_reservation;
   get_int_input("Insira o número da reserva que deseja cancelar: ",
                 &which_reservation);
 
+  if (which_reservation > llist_get_size(reservation_list) ||
+      which_reservation < 1)
+  {
+    printf("Não existe um item correspondente ao número que escolheu.\n");
+    return 0;
+  }
+
   llist_remove_by_index(reservation_list, which_reservation - 1);
 
   return 1;
 }
-
