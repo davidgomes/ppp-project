@@ -111,7 +111,6 @@ int reservation_request_cancel(llist *reservation_list)
   return 1;
 }
 
-<<<<<<< HEAD
 void write_reservations(char *file, lnode *where)
 {
   FILE *fp;
@@ -174,7 +173,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
            &(reservation->actual_time.minute));
     llist_insert(reservation_list, reservation);
   }
-=======
+
 lnode *_reservation_sort_rec(lnode *start)
 {
   if (start == NULL)
@@ -204,5 +203,4 @@ lnode *_reservation_sort_rec(lnode *start)
 void reservation_sort(llist *reservation_list)
 {
   reservation_list->root = _reservation_sort_rec(reservation_list->root);
->>>>>>> acded5ad787a623f577507e087a09fe9440953cc
 }
