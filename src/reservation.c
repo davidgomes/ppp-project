@@ -118,7 +118,6 @@ lnode *_reservation_sort_rec(lnode *start)
     return NULL;
   }
 
-  /* First push the larger items down */
   if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
                                         &(((reservation*) start->next->value)->actual_time)))
   {
