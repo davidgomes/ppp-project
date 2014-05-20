@@ -85,3 +85,67 @@ int reservation_request_cancel(llist *reservation_list)
 
   return 1;
 }
+
+void write_reservations(char *file, lnode *where)
+{
+  FILE *fp;
+  reservation *aux;
+  
+  if ( (fp = fopen(file, "w")) == NULL)
+  {
+    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
+    return;
+  }
+  
+  while (where != NULL)
+  {
+    aux = where->value;
+    fprintf(fp, "%s, %d, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+            aux->id,
+            aux->register_time.day,
+            aux->register_time.month,
+            aux->register_time.year,
+            aux->register_time.hour,
+            aux->register_time.minute,
+            aux->actual_time.day,
+            aux->actual_time.month,
+            aux->actual_time.year,
+            aux->actual_time.hour,
+            aux->actual_time.minute);
+    where = where->next;
+  }
+  
+  fclose(fp);
+}
+
+void read_reservation(char *file, llist *client_list, llist *reservation_list)
+{
+  FILE *fp;
+  reservation *reservation;
+  client *client;
+  char client_name[MAX_NAME_SIZE];
+
+  if ((fp =fopen(file,"r")) == NULL)
+  {
+    fprintf(stderr, "Ocorreu um erro");
+    return ;
+  }
+
+  while (fscanf(fp, "%[^,],", client_name) == 1)
+  {
+    client = client_find_by_name(client_list, client_name);
+    reservation = reservation_new(client);
+    fscanf(fp, "%d, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", &(reservation->id),
+           &(reservation->register_time.day),
+           &(reservation->register_time.month),
+           &(reservation->register_time.year),
+           &(reservation->register_time.hour),
+           &(reservation->register_time.minute),
+           &(reservation->actual_time.day),
+           &(reservation->actual_time.month),
+           &(reservation->actual_time.year),
+           &(reservation->actual_time.hour),
+           &(reservation->actual_time.minute));
+    llist_insert(reservation_list, reservation);
+  }
+}

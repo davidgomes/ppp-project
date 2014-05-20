@@ -58,3 +58,46 @@ int client_print(client *which)
 
   return 1;
 }
+
+void write_client(char *file, lnode *where)
+{
+  FILE * fp;
+  client *node_value;
+  
+  if ( (fp = fopen(file, "w")) == NULL)
+  {
+    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
+    return;
+  }
+  
+  while (where != NULL)
+  {
+    node_value = where->value;
+    fprintf(fp,"%s, %d\n",node_value->name, node_value->id); 
+    where = where->next;
+  }
+  fclose(fp);
+}
+
+void read_client(char *file, llist *myllist)
+{
+  FILE *fp;
+  char client_name[MAX_NAME_SIZE];
+  int client_id;
+  client *client;
+  
+  if ((fp = fopen(file,"r")) == NULL)
+  {
+    fprintf(stderr, "Ocorreu um erro");
+    return ;
+  }
+
+  while (fscanf(fp, "%[^,], %d\n", client_name, &client_id) == 2)
+  {
+    printf("coco\n");
+    client = client_new(client_name);
+    client->id = client_id;
+    llist_insert(myllist, client);
+  }
+}
+

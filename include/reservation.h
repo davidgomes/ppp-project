@@ -24,4 +24,7 @@ int reservation_request_listing(llist*);
 int reservation_request_new(llist*, llist*);
 int reservation_request_cancel(llist*);
 
+void write_reservations(char*, lnode*);
+void read_reservation(char*, llist*, llist*);
+
 #endif
