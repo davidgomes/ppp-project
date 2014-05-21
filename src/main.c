@@ -5,7 +5,7 @@ void main_loop()
   int which_option = -1;
 
   clear_screen();
-  
+
   while (which_option != EXIT_OPTION)
   {
     do
@@ -16,7 +16,7 @@ void main_loop()
       {
         while (!reservation_request_new(reservation_list, client_list))
         {
-          printf("Ocorreu um erro a adicionar uma nova reserva.\n");
+
         }
 
         clear_screen();
@@ -27,7 +27,7 @@ void main_loop()
       {
         while (!reservation_request_cancel(reservation_list))
         {
-          printf("Ocorreu um erro a cancelar uma reserva.\n");
+
         }
 
         clear_screen();
@@ -40,14 +40,14 @@ void main_loop()
 
         while (!reservation_request_listing(reservation_list))
         {
-          printf("Ocorreu um erro a listar as reservas e pré-reservas.\n");
+
         }
       }
       else if (which_option == 4)
       {
         while (!client_request_print(client_list))
         {
-          printf("Ocorreu um erro a ler o nome do cliente\n");
+
         }
       }
     } while (which_option <= 0);
@@ -61,7 +61,7 @@ int main()
 
   read_client("clients.txt", client_list);
   read_reservation("reservations.txt", client_list, reservation_list);
-  
+
   menu_load();
   main_loop();
 

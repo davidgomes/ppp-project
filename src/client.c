@@ -37,6 +37,7 @@ int client_request_print(llist *client_list)
 
   if (found_client == NULL)
   {
+    printf("Cliente não encontrado, verifique o nome introduzido.\n");
     return 0;
   }
   else

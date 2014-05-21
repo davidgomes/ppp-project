@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/**
+ * Clears the screen in a cros-platform way
+ */
 void clear_screen()
 {
   #ifdef WINDOWS
