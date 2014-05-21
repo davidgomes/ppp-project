@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 typedef struct lnode
 {
   struct lnode *next;
@@ -21,6 +20,10 @@ llist *llist_new();
 lnode *lnode_new(void *value);
 
 lnode *_llist_insert_rec(lnode*, void*);
+
+/**
+ * Inserts a new node to a linked list
+ */
 void llist_insert(llist*, void*);
 
 lnode *_llist_find_rec(lnode*, void*);
