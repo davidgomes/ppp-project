@@ -166,7 +166,7 @@ void write_reservations(char *file, llist *reservation_list)
     aux = where->value;
 
     fprintf(fp, "%s, %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
-            aux->type;
+            aux->type,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
