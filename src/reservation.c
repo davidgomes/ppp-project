@@ -79,6 +79,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
     printf("Não pode reservar para o passado.\n");
+    flush_input();
     return 0;
   }
 

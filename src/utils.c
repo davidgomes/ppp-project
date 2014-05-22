@@ -78,3 +78,10 @@ void time_t_to_xtime(xtime *save_where, time_t *which_time)
   save_where->hour = current_time_info->tm_hour;
   save_where->minute = current_time_info->tm_min;
 }
+
+void flush_input(void)
+{
+  int c;
+  while((c = getchar()) != '\n' && c != EOF);
+	      
+}

@@ -41,4 +41,10 @@ void ask_date(xtime*);
  */
 void time_t_to_xtime(xtime*, time_t*);
 
+/**
+ * Flushes the input buffer.
+ */
+
+void flush_input(void);
+
 #endif
