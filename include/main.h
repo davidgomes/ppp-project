@@ -9,7 +9,14 @@
 #include "reservation.h"
 #include "llist.h"
 
+/**
+ * The list of clients.
+ */
 llist *client_list;
+
+/**
+ * The list of reservations.
+ */
 llist *reservation_list;
 
 /**

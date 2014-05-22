@@ -9,6 +9,9 @@
 #define N_OPTIONS 5
 #define EXIT_OPTION N_OPTIONS
 
+/**
+ * An array holding all the menu options as strings.
+ */
 char *options[N_OPTIONS];
 
 /**
