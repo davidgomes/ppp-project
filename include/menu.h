@@ -11,8 +11,19 @@
 
 char *options[N_OPTIONS];
 
+/**
+ * Loads the strings for the menu.
+ */
 void menu_load();
+
+/**
+ * Displays the menu.
+ */
 void menu_show();
+
+/**
+ * Calls menu_show and waits for the user to pick an option.
+ */
 int menu_wait();
 
 #endif

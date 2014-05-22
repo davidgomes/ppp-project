@@ -3,11 +3,17 @@
 
 #include <stdio.h>
 
+/**
+ * The xtime strutcture, used for all kinds of dates.
+ */
 typedef struct xtime {
   int year, month, day;
   int hour, minute;
 } xtime;
 
+/**
+ * Comparison function for two xtime instances.
+ */
 int xtime_comp(xtime*, xtime*);
 
 #endif
