@@ -31,5 +31,7 @@ int menu_wait()
     return chosen_option;
   }
 
+  clear_screen();
+
   return -1;
 }
