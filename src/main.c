@@ -65,8 +65,8 @@ int main()
   menu_load();
   main_loop();
 
-  write_client("clients.txt", client_list->root);
-  write_reservations("reservations.txt", reservation_list->root);
+  write_client("clients.txt", client_list);
+  write_reservations("reservations.txt", reservation_list);
 
   return 0;
 }

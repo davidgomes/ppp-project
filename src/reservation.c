@@ -148,10 +148,11 @@ int reservation_request_cancel(llist *reservation_list)
   return 1;
 }
 
-void write_reservations(char *file, lnode *where)
+void write_reservations(char *file, llist *reservation_list)
 {
   FILE *fp;
   reservation *aux;
+  lnode *where = reservation_list->root;
 
   if ((fp = fopen(file, "w")) == NULL)
   {

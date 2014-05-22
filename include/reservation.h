@@ -26,7 +26,7 @@ typedef struct reservation
   client *client;
 
   int type;
-  
+
   xtime register_time;
   xtime actual_time;
 } reservation;
@@ -69,7 +69,7 @@ int reservation_request_cancel(llist*);
 /**
  * Writes reservations to file.
  */
-void write_reservations(char*, lnode*);
+void write_reservations(char*, llist*);
 
 /**
  * Reads reservations from file.

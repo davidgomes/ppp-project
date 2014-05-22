@@ -47,7 +47,7 @@ int client_print(client*);
 /**
  * Write all clients to a file.
  */
-void write_client(char*, lnode*);
+void write_client(char*, llist*);
 
 /**
  * Reads all clients from a file.

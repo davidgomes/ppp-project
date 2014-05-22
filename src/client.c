@@ -60,10 +60,11 @@ int client_print(client *which)
   return 1;
 }
 
-void write_client(char *file, lnode *where)
+void write_client(char *file, llist *client_list)
 {
   FILE *fp;
   client *node_value;
+  lnode *where = client_list->root;
 
   if ((fp = fopen(file, "w")) == NULL)
   {
@@ -81,7 +82,7 @@ void write_client(char *file, lnode *where)
   fclose(fp);
 }
 
-void read_client(char *file, llist *myllist)
+void read_client(char *file, llist *client_list)
 {
   FILE *fp;
   char client_name[MAX_NAME_SIZE];
@@ -98,7 +99,7 @@ void read_client(char *file, llist *myllist)
   {
     client = client_new(client_name);
     client->id = client_id;
-    llist_insert(myllist, client);
+    llist_insert(client_list, client);
   }
 
   fclose(fp);
