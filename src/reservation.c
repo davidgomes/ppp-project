@@ -1,10 +1,23 @@
 #include "reservation.h"
 
-reservation *reservation_new(client *client)
+reservation *reservation_new(client *client, int type)
 {
   reservation *new_reservation = (reservation*) malloc(sizeof(reservation));
   new_reservation->client = client;
+  new_reservation->type = type;
   return new_reservation;
+}
+
+void reservation_type_str_to_int(char *str, int *integer)
+{
+  if (strcmp(str, "L") == 0)
+  {
+    *integer = RESERVATION_TYPE_CLEANING;
+  }
+  else if (strcmp(str, "M") == 0)
+  {
+    *integer = RESERVATION_TYPE_CHECKING;
+  }
 }
 
 void reservation_print(reservation *which)
@@ -18,6 +31,20 @@ void reservation_print(reservation *which)
   char actual_time_str[MAX_TIME_CHARS];
   time_to_str(&(which->actual_time), actual_time_str);
   printf("Data marcada: %s\n", actual_time_str);
+
+  printf("Trata-se de uma ");
+  if (which->type == RESERVATION_TYPE_CLEANING)
+  {
+    printf("lavagem.\n");
+  }
+  else if (which->type == RESERVATION_TYPE_CHECKING)
+  {
+    printf("manutenção.\n");
+  }
+  else
+  {
+    printf("ERRO.\n");
+  }
 }
 
 void reservation_listing(lnode *where, int index)
@@ -67,7 +94,17 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
     llist_insert(client_list, request_client);
   }
 
-  reservation *request_reservation = reservation_new(request_client);
+  /* Asks the user for what type of a reservation it is. */
+  int request_reservation_type = -1;
+  char request_reservation_type_str[MAX_CHAR];
+
+  get_str_input("Que tipo de lavagem deseja, lavagem [L] ou manutenção [M]: ",
+                request_reservation_type_str, MAX_CHAR);
+
+  reservation_type_str_to_int(request_reservation_type_str,
+                              &request_reservation_type);
+
+  reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
   /* Get the current date for the registration date */
   time_t current_time = time(NULL);
@@ -160,7 +197,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
   while (fscanf(fp, "%[^,],", client_name) == 1)
   {
     client = client_find_by_name(client_list, client_name);
-    reservation = reservation_new(client);
+    reservation = reservation_new(client, 1);
 
     fscanf(fp, "%d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
            &(reservation->register_time.day),

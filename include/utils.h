@@ -10,6 +10,7 @@
 
 #define MAX_INT_DIGITS 32
 #define MAX_TIME_CHARS 128
+#define MAX_CHAR 5
 
 /**
  * Clears the screen.

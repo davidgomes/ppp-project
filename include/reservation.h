@@ -9,11 +9,24 @@
 #include "xtime.h"
 
 /**
+ * Lavagem.
+ */
+#define RESERVATION_TYPE_CLEANING 1
+
+/**
+ * Manutenção.
+ */
+#define RESERVATION_TYPE_CHECKING 2
+
+/**
  * The reservation structure that holds reservations.
  */
 typedef struct reservation
 {
   client *client;
+
+  int type;
+  
   xtime register_time;
   xtime actual_time;
 } reservation;
@@ -21,7 +34,12 @@ typedef struct reservation
 /**
  * Allocates memory for and returns a new instance of a reservation.
  */
-reservation *reservation_new();
+reservation *reservation_new(client*, int);
+
+/**
+ * Converts a reservation type as a character to the corresponding integer.
+ */
+void reservation_type_str_to_int(char*, int*);
 
 /**
  * Prints the information of a given reservation.
