@@ -82,6 +82,5 @@ void time_t_to_xtime(xtime *save_where, time_t *which_time)
 void flush_input(void)
 {
   int c;
-  while((c = getchar()) != '\n' && c != EOF);
-	      
+  while((c = getchar()) != '\n' && c != EOF);	      
 }
