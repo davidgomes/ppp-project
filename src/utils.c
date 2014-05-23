@@ -46,12 +46,17 @@ void time_to_str(xtime *which_time, char *save_where)
                                                       which_time->minute);
 }
 
-void ask_date(xtime *save_where)
+int ask_date(xtime *save_where)
 {
   // Debug
   time_t current_time = time(NULL);
   xtime current_xtime;
   char current_time_str[MAX_TIME_CHARS];
+  char actual_time[MAX_TIME_CHARS];
+  char permited_chars[MAX_TIME_CHARS] = "0123456789/: ";
+  char *c;
+  int i;
+  
   time_t_to_xtime(&current_xtime, &current_time);
   time_to_str(&current_xtime, current_time_str);
 
@@ -59,13 +64,25 @@ void ask_date(xtime *save_where)
 
   printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM: ");
 
-  scanf("%d/%d/%d %d:%d", &save_where->day,
+  fgets(actual_time, MAX_TIME_CHARS, stdin);
+
+  strtok(actual_time, "\n");
+
+  for (i = 0; actual_time[i] != '\0'; i++)
+  {
+    c = strchr(permited_chars, actual_time[i]);
+    if (c == NULL)
+    {
+      return 1;
+    }
+  }
+    
+  sscanf(actual_time, "%d/%d/%d %d:%d", &save_where->day,
                           &save_where->month,
                           &save_where->year,
                           &save_where->hour,
                           &save_where->minute);
-
-  getchar();
+  return 0;
 }
 
 void time_t_to_xtime(xtime *save_where, time_t *which_time)

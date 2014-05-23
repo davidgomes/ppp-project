@@ -35,7 +35,7 @@ void time_to_str(xtime*, char*);
 /**
  * Asks the user for a date and returns the xtime value.
  */
-void ask_date(xtime*);
+int ask_date(xtime*);
 
 /**
  * Converts a time_t to a xtime.

@@ -111,7 +111,10 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  ask_date(&(request_reservation->actual_time));
+  while (ask_date(&(request_reservation->actual_time)) == 1)
+  {
+    printf("Por favor introduza uma data correcta\n");
+  }
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
