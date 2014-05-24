@@ -15,7 +15,7 @@
 /**
  * Clears the screen.
  */
-void clear_screen();
+void clear_screen(void);
 
 /**
  * Reads some string input.
