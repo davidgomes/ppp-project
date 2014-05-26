@@ -15,8 +15,10 @@ void menu_show()
 
   for (option = 1; option < N_OPTIONS + 1; option++)
   {
-    printf("%d: %s.\n", option, options[option - 1]);
+    printf("%s%d: %s.\n", COLOR_YELLOW, option, options[option - 1]);
   }
+
+  printf("%s", COLOR_WHITE);
 }
 
 int menu_wait()
