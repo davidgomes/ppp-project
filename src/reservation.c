@@ -8,15 +8,21 @@ reservation *reservation_new(client *client, int type)
   return new_reservation;
 }
 
-void reservation_type_str_to_int(char *str, int *integer)
+int reservation_type_str_to_int(char *str, int *integer)
 {
-  if (strcmp(str, "L") == 0)
+  if (!strcmp(str, "L"))
   {
     *integer = RESERVATION_TYPE_CLEANING;
+    return 0;
   }
-  else if (strcmp(str, "M") == 0)
+  else if (!strcmp(str, "M"))
   {
     *integer = RESERVATION_TYPE_CHECKING;
+    return 0;
+  }
+  else
+  {
+    return 1;
   }
 }
 
@@ -64,17 +70,17 @@ void reservation_listing(lnode *where, int index)
 
 int reservation_request_listing(llist *reservation_list)
 {
-  char which_order_str[5];
-  get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ", which_order_str, 5);
+  char which_order_str[MAX_CHAR];
+  int reservation_sort_order = -1;
 
-  if (strcmp(which_order_str, "R") == 0)
+  do
   {
-    reservation_sort(reservation_list, 1);
-  }
-  else if (strcmp(which_order_str, "A") == 0)
-  {
-    reservation_sort(reservation_list, 0);
-  }
+   get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
+                 which_order_str, MAX_CHAR);
+
+  } while (reservation_request_check(&reservation_sort_order, which_order_str));
+
+  reservation_sort(reservation_list, reservation_sort_order);
 
   reservation_listing(reservation_list->root, 1);
   return 1;
@@ -83,7 +89,10 @@ int reservation_request_listing(llist *reservation_list)
 int reservation_request_new(llist *reservation_list, llist *client_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-  get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
+  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE))
+  {
+    printf("Input incorreto.\n");
+  }
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
@@ -98,11 +107,13 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   int request_reservation_type = -1;
   char request_reservation_type_str[MAX_CHAR];
 
-  get_str_input("Que tipo de lavagem deseja, lavagem [L] ou manutenção [M]: ",
-                request_reservation_type_str, MAX_CHAR);
+  do
+  {
+    get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
+                  request_reservation_type_str, MAX_CHAR);
 
-  reservation_type_str_to_int(request_reservation_type_str,
-                              &request_reservation_type);
+  } while (reservation_type_check(&request_reservation_type,
+                                  request_reservation_type_str));
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
@@ -111,11 +122,15 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  ask_date(&(request_reservation->actual_time));
+  while (ask_date(&(request_reservation->actual_time)))
+  {
+    printf("Por favor introduza uma data correta.\n");
+  }
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
     printf("Não pode reservar para o passado.\n");
+    dump_line(stdin);
     return 0;
   }
 
@@ -156,7 +171,7 @@ void write_reservations(char *file, llist *reservation_list)
 
   if ((fp = fopen(file, "w")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
+    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro.\n");
     return;
   }
 
@@ -164,7 +179,8 @@ void write_reservations(char *file, llist *reservation_list)
   {
     aux = where->value;
 
-    fprintf(fp, "%s, %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+    fprintf(fp, "%s, %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+            aux->type,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
@@ -191,7 +207,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
 
   if ((fp = fopen(file, "r")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro");
+    fprintf(stderr, "Ocorreu um erro.");
     return;
   }
 
@@ -200,7 +216,8 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
     client = client_find_by_name(client_list, client_name);
     reservation = reservation_new(client, 1);
 
-    fscanf(fp, "%d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
+    fscanf(fp, "%d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
+           &(reservation->type),
            &(reservation->register_time.day),
            &(reservation->register_time.month),
            &(reservation->register_time.year),
@@ -271,4 +288,59 @@ lnode *_reservation_sort_rec(lnode *start, int order)
 void reservation_sort(llist *reservation_list, int order)
 {
   reservation_list->root = _reservation_sort_rec(reservation_list->root, order);
+}
+
+int reservation_type_check(int *request_reservation_type, char *request_reservation_type_str)
+{
+  if (strlen(request_reservation_type_str) != SINGLE_INPUT_SIZE)
+  {
+    printf("O input nao tem o tamanho correto.\n");
+    return 1;
+  }
+
+  if (check_if_lower(request_reservation_type_str))
+  {
+    char_to_upper(request_reservation_type_str);
+  }
+
+  if (reservation_type_str_to_int(request_reservation_type_str,
+                                  request_reservation_type))
+  {
+    printf("O input é incorreto.\n");
+    return 1;
+  }
+
+  return 0;
+}
+
+int reservation_request_check(int *reservation_sort_order, char *which_order_str)
+{
+  if (strlen(which_order_str) != SINGLE_INPUT_SIZE)
+  {
+    printf("O input nao tem o tamanho correto.\n");
+    return 1;
+  }
+
+  if (check_if_lower(which_order_str))
+  {
+    char_to_upper(which_order_str);
+  }
+
+  if (!strcmp(which_order_str, "R"))
+  {
+    *reservation_sort_order = 1;
+    return 0;
+  }
+  else if (!strcmp(which_order_str, "A"))
+  {
+    *reservation_sort_order = 0;
+    return 0;
+  }
+  else
+  {
+    printf("O input é incorreto.\n");
+    return 1;
+  }
+
+  return 0;
 }

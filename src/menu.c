@@ -24,12 +24,17 @@ int menu_wait()
   menu_show();
 
   int chosen_option;
-  get_int_input("Insira a sua opção: ", &chosen_option);
+  while ((get_int_input("Insira a sua opção: ", &chosen_option)) == 1)
+  {
+    printf("Opção não válida\n");
+  }
 
   if (chosen_option > 0 && chosen_option <= N_OPTIONS)
   {
     return chosen_option;
   }
+
+  clear_screen();
 
   return -1;
 }

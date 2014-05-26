@@ -45,6 +45,8 @@ void main_loop()
       }
       else if (which_option == 4)
       {
+        clear_screen();
+
         while (!client_request_print(client_list))
         {
 

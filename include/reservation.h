@@ -39,7 +39,7 @@ reservation *reservation_new(client*, int);
 /**
  * Converts a reservation type as a character to the corresponding integer.
  */
-void reservation_type_str_to_int(char*, int*);
+int reservation_type_str_to_int(char*, int*);
 
 /**
  * Prints the information of a given reservation.
@@ -85,5 +85,15 @@ lnode *_reservation_sort_rec(lnode*, int);
  * Sorts a list of reservations.
  */
 void reservation_sort(llist*, int);
+
+/**
+ * Function to check the reservation type input.
+ */
+int reservation_type_check(int*, char*);
+
+/**
+ * Function that checks the input of the order in which the reservations will be displayed
+ */
+int reservation_request_check(int*, char*);
 
 #endif
