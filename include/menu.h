@@ -9,6 +9,9 @@
 #define N_OPTIONS 5
 #define EXIT_OPTION N_OPTIONS
 
+#define COLOR_YELLOW "\x1B[33m"
+#define COLOR_WHITE "\x1B[37m"
+
 /**
  * An array holding all the menu options as strings.
  */
