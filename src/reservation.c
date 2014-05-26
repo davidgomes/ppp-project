@@ -8,15 +8,21 @@ reservation *reservation_new(client *client, int type)
   return new_reservation;
 }
 
-void reservation_type_str_to_int(char *str, int *integer)
+int reservation_type_str_to_int(char *str, int *integer)
 {
   if (strcmp(str, "L") == 0)
   {
     *integer = RESERVATION_TYPE_CLEANING;
+    return 0;
   }
   else if (strcmp(str, "M") == 0)
   {
     *integer = RESERVATION_TYPE_CHECKING;
+    return 0;
+  }
+  else
+  {
+    return 1;
   }
 }
 
@@ -98,11 +104,13 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   int request_reservation_type = -1;
   char request_reservation_type_str[MAX_CHAR];
 
-  get_str_input("Que tipo de lavagem deseja, lavagem [L] ou manutenção [M]: ",
-                request_reservation_type_str, MAX_CHAR);
+  do
+  {
+    get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
+                  request_reservation_type_str, MAX_CHAR);
+  } while( reservation_type_check(&request_reservation_type,
+                                  request_reservation_type_str) == 1);
 
-  reservation_type_str_to_int(request_reservation_type_str,
-                              &request_reservation_type);
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
@@ -277,4 +285,28 @@ lnode *_reservation_sort_rec(lnode *start, int order)
 void reservation_sort(llist *reservation_list, int order)
 {
   reservation_list->root = _reservation_sort_rec(reservation_list->root, order);
+}
+
+int reservation_type_check(int *request_reservation_type, char *request_reservation_type_str)
+{
+  if (strlen(request_reservation_type_str) != 1)
+  {
+    printf("O input nao tem o tamanho correcto\n");
+    return 1;
+  }
+  
+  if (check_if_lower(request_reservation_type_str) == 1)
+  {
+    char_to_upper(request_reservation_type_str);
+  }
+
+  if (reservation_type_str_to_int(request_reservation_type_str,
+                                  request_reservation_type) == 1)
+  {
+    printf("O input é incorrecto\n");
+    return 1;
+  }
+
+  return 0;
+
 }

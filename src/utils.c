@@ -12,29 +12,32 @@ void clear_screen()
 void get_str_input(char *say_what, char *save_where, int input_size)
 {
   printf("%s", say_what);
+  
   fgets(save_where, input_size, stdin);
-
+  
   strtok(save_where, "\n");
 }
 
-void get_int_input(char *say_what, int *save_where)
+int get_int_input(char *say_what, int *save_where)
 {
   char temp_buffer[MAX_INT_DIGITS];
   int i;
   printf("%s", say_what);
+  
   fgets(temp_buffer, MAX_INT_DIGITS, stdin);
-
   strtok(temp_buffer, "\n");
   
   for (i = 0; temp_buffer[i] != '\0'; i++)
   {
     if (temp_buffer[i] < '0' || temp_buffer[i] > '9')
     {
-      return ;
+      printf("Opção não válida\n");
+      return 1;
     }
   }
   
   *save_where = atoi(temp_buffer);
+  return 0;
 }
 
 void time_to_str(xtime *which_time, char *save_where)
@@ -71,6 +74,7 @@ int ask_date(xtime *save_where)
   for (i = 0; actual_time[i] != '\0'; i++)
   {
     c = strchr(permited_chars, actual_time[i]);
+
     if (c == NULL)
     {
       return 1;
@@ -78,10 +82,11 @@ int ask_date(xtime *save_where)
   }
     
   sscanf(actual_time, "%d/%d/%d %d:%d", &save_where->day,
-                          &save_where->month,
-                          &save_where->year,
-                          &save_where->hour,
-                          &save_where->minute);
+         &save_where->month,
+         &save_where->year,
+         &save_where->hour,
+         &save_where->minute);
+  
   return 0;
 }
 
@@ -100,4 +105,22 @@ void flush_input(void)
 {
   int c;
   while((c = getchar()) != '\n' && c != EOF);	      
+}
+
+int check_if_lower(char *string)
+{
+  int i;
+  for (i = 0; string[i] != '\0'; i++)
+  {
+    if (string[i] >= 'a' && string[i] <= 'z')
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+void char_to_upper(char *lower)
+{
+  *(lower) = ('A' + *(lower) - 'a');
 }

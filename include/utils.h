@@ -25,7 +25,7 @@ void get_str_input(char*, char*, int);
 /**
  * Reads some integer input.
  */
-void get_int_input(char*, int*);
+int get_int_input(char*, int*);
 
 /**
  * Converts a xtime to a string, ready to be printed.
@@ -45,7 +45,16 @@ void time_t_to_xtime(xtime*, time_t*);
 /**
  * Flushes the input buffer.
  */
-
 void flush_input(void);
+
+/**
+ * Checks if there is a lower case char in a string
+ */
+int check_if_lower(char*);
+
+/**
+ * Converts lower case char to uuper case
+ */
+void char_to_upper(char *);
 
 #endif
