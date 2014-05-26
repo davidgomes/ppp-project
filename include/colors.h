@@ -7,4 +7,7 @@
 
 #define COLOR_WHITE "\x1B[37m"
 
+/**
+ * Reinicia a cor a branco.
+ */
 void reset_color(void);

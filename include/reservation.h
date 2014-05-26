@@ -20,6 +20,11 @@
 #define RESERVATION_TYPE_CHECKING 2
 
 /**
+ * Duração de qualquer tipo de reservas, em minutos.
+ */
+#define RESERVATION_DURATION 30
+
+/**
  * The reservation structure that holds reservations.
  */
 typedef struct reservation
@@ -93,7 +98,7 @@ void reservation_sort(llist*, int);
 int reservation_type_check(int*, char*);
 
 /**
- * Function that checks the input of the order in which the reservations will be displayed
+ * Function that checks the input of the order in which the reservations will be displayed.
  */
 int reservation_request_check(int*, char*);
 
