@@ -7,6 +7,7 @@
 #include <time.H>
 
 #include "xtime.h"
+#include "colors.h"
 
 #define MAX_INT_DIGITS 32
 #define MAX_TIME_CHARS 128

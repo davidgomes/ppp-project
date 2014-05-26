@@ -28,17 +28,26 @@ int reservation_type_str_to_int(char *str, int *integer)
 
 void reservation_print(reservation *which)
 {
-  printf("Cliente: %s\n", which->client->name);
+  printf("%sCliente: ", COLOR_CYAN);
+  reset_color();
+  printf("%s\n", which->client->name);
 
   char register_time_str[MAX_TIME_CHARS];
   time_to_str(&(which->register_time), register_time_str);
-  printf("Registada em: %s\n", register_time_str);
+
+  printf("%sRegistada em: ", COLOR_CYAN);
+  reset_color();
+  printf("%s\n", register_time_str);
 
   char actual_time_str[MAX_TIME_CHARS];
   time_to_str(&(which->actual_time), actual_time_str);
-  printf("Data marcada: %s\n", actual_time_str);
 
-  printf("Trata-se de uma ");
+  printf("%sData marcada: ", COLOR_CYAN);
+  reset_color();
+  printf("%s\n", actual_time_str);
+
+  printf("%sTrata-se de uma: ", COLOR_CYAN);
+  reset_color();
   if (which->type == RESERVATION_TYPE_CLEANING)
   {
     printf("lavagem.\n");
@@ -60,7 +69,8 @@ void reservation_listing(lnode *where, int index)
     return;
   }
 
-  printf("Listando reserva número %d\n", index);
+  printf("%sListando reserva número %d\n", COLOR_CYAN, index);
+  reset_color();
   reservation_print((reservation*) where->value);
 
   printf("\n");
