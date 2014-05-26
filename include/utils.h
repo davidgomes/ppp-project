@@ -20,7 +20,7 @@ void clear_screen();
 /**
  * Reads some string input.
  */
-void get_str_input(char*, char*, int);
+int get_str_input(char*, char*, int);
 
 /**
  * Reads some integer input.
@@ -45,7 +45,7 @@ void time_t_to_xtime(xtime*, time_t*);
 /**
  * Flushes the input buffer.
  */
-void flush_input(void);
+void dump_line(FILE*);
 
 /**
  * Checks if there is a lower case char in a string

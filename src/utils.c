@@ -9,13 +9,20 @@ void clear_screen()
   #endif
 }
 
-void get_str_input(char *say_what, char *save_where, int input_size)
+int get_str_input(char *say_what, char *save_where, int input_size)
 {
   printf("%s", say_what);
   
   fgets(save_where, input_size, stdin);
+
+  if (strlen(save_where) == (input_size - 1))
+  {
+    dump_line(stdin);
+    return 1;
+  }
   
   strtok(save_where, "\n");
+  return 0;
 }
 
 int get_int_input(char *say_what, int *save_where)
@@ -24,14 +31,22 @@ int get_int_input(char *say_what, int *save_where)
   int i;
   printf("%s", say_what);
   
-  fgets(temp_buffer, MAX_INT_DIGITS, stdin);
+  if (fgets(temp_buffer, MAX_INT_DIGITS, stdin) == NULL)
+  {
+    return 1;
+  }
+  
+  if (strlen(temp_buffer) == (MAX_INT_DIGITS - 1))
+  {
+    dump_line(stdin);
+  }
+  
   strtok(temp_buffer, "\n");
   
   for (i = 0; temp_buffer[i] != '\0'; i++)
   {
     if (temp_buffer[i] < '0' || temp_buffer[i] > '9')
     {
-      printf("Opção não válida\n");
       return 1;
     }
   }
@@ -101,11 +116,14 @@ void time_t_to_xtime(xtime *save_where, time_t *which_time)
   save_where->minute = current_time_info->tm_min;
 }
 
-void flush_input(void)
+void dump_line( FILE * fp )
 {
-  int c;
-  while((c = getchar()) != '\n' && c != EOF);	      
+  int ch;
+
+  while( (ch = fgetc(fp)) != EOF && ch != '\n' )
+    /* null body */;
 }
+
 
 int check_if_lower(char *string)
 {
