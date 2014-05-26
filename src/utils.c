@@ -17,6 +17,7 @@ int get_str_input(char *say_what, char *save_where, int input_size)
 
   if (strlen(save_where) == (input_size - 1))
   {
+    printf("Input tem tamnho incorrecto\n");
     dump_line(stdin);
     return 1;
   }
@@ -38,7 +39,9 @@ int get_int_input(char *say_what, int *save_where)
   
   if (strlen(temp_buffer) == (MAX_INT_DIGITS - 1))
   {
+    printf("Input tem tamnho incorrecto\n");
     dump_line(stdin);
+    return 1;
   }
   
   strtok(temp_buffer, "\n");
