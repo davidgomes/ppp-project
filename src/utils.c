@@ -120,7 +120,7 @@ void time_t_to_xtime(xtime *save_where, time_t *which_time)
   save_where->minute = current_time_info->tm_min;
 }
 
-void dump_line(FILE * fp)
+void dump_line(FILE *fp)
 {
   int ch;
 
