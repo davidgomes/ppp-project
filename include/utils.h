@@ -11,6 +11,7 @@
 #define MAX_INT_DIGITS 32
 #define MAX_TIME_CHARS 128
 #define MAX_CHAR 5
+#define SINGLE_INPUT_SIZE 1
 
 /**
  * Clears the screen.

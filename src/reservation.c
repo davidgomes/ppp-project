@@ -70,18 +70,17 @@ void reservation_listing(lnode *where, int index)
 
 int reservation_request_listing(llist *reservation_list)
 {
-  char which_order_str[5];
-  get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ", which_order_str, 5);
-
-  if (strcmp(which_order_str, "R") == 0)
+  char which_order_str[MAX_CHAR];
+  int reservation_sort_order = -1;
+  
+  do
   {
-    reservation_sort(reservation_list, 1);
-  }
-  else if (strcmp(which_order_str, "A") == 0)
-  {
-    reservation_sort(reservation_list, 0);
-  }
+   get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ", which_order_str
+                 , MAX_CHAR);
+     } while( reservation_request_check(&reservation_sort_order, which_order_str) == 1);
 
+  reservation_sort(reservation_list, reservation_sort_order);
+              
   reservation_listing(reservation_list->root, 1);
   return 1;
 }
@@ -292,7 +291,7 @@ void reservation_sort(llist *reservation_list, int order)
 
 int reservation_type_check(int *request_reservation_type, char *request_reservation_type_str)
 {
-  if (strlen(request_reservation_type_str) != 1)
+  if (strlen(request_reservation_type_str) != SINGLE_INPUT_SIZE)
   {
     printf("O input nao tem o tamanho correcto\n");
     return 1;
@@ -313,3 +312,37 @@ int reservation_type_check(int *request_reservation_type, char *request_reservat
   return 0;
 
 }
+
+int reservation_request_check(int *reservation_sort_order, char *which_order_str)
+{
+  if (strlen(which_order_str) != SINGLE_INPUT_SIZE)
+  {
+    printf("O input nao tem o tamanho correcto\n");
+    return 1;
+  }
+
+  if (check_if_lower(which_order_str) == 1)
+  {
+    char_to_upper(which_order_str);
+  }
+
+  if (strcmp(which_order_str, "R") == 0)
+  {
+    *(reservation_sort_order) = 1;
+    return 0;
+  }
+  else if (strcmp(which_order_str, "A") == 0)
+  {
+    *(reservation_sort_order) = 0;
+    return 0;
+  }
+  else
+  {
+    printf("O input é incorrecto\n");
+    return 1;
+  }
+
+  return 0;
+}
+  
+

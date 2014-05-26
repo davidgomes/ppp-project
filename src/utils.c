@@ -13,7 +13,11 @@ int get_str_input(char *say_what, char *save_where, int input_size)
 {
   printf("%s", say_what);
   
-  fgets(save_where, input_size, stdin);
+  if (fgets(save_where, input_size, stdin) == NULL)
+  {
+    return 1;
+  }
+  strtok(save_where, "\n");
 
   if (strlen(save_where) == (input_size - 1))
   {
@@ -21,7 +25,6 @@ int get_str_input(char *say_what, char *save_where, int input_size)
     return 1;
   }
   
-  strtok(save_where, "\n");
   return 0;
 }
 
@@ -36,13 +39,13 @@ int get_int_input(char *say_what, int *save_where)
     return 1;
   }
   
+  strtok(temp_buffer, "\n");
+ 
   if (strlen(temp_buffer) == (MAX_INT_DIGITS - 1))
   {
     dump_line(stdin);
     return 1;
   }
-  
-  strtok(temp_buffer, "\n");
   
   for (i = 0; temp_buffer[i] != '\0'; i++)
   {

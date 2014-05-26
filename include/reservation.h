@@ -91,4 +91,9 @@ void reservation_sort(llist*, int);
  */
 int reservation_type_check(int*, char*);
 
+/**
+ * Function that checks the input of the order in which the reservations will be displayed
+ */
+int reservation_request_check(int*, char*);
+
 #endif
