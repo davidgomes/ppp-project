@@ -111,9 +111,9 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   {
     get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
                   request_reservation_type_str, MAX_CHAR);
-  } while( reservation_type_check(&request_reservation_type,
-                                  request_reservation_type_str) == 1);
 
+  } while (reservation_type_check(&request_reservation_type,
+                                  request_reservation_type_str));
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
