@@ -49,12 +49,12 @@ void time_t_to_xtime(xtime*, time_t*);
 void dump_line(FILE*);
 
 /**
- * Checks if there is a lower case char in a string
+ * Checks if there is a lower case char in a string.
  */
 int check_if_lower(char*);
 
 /**
- * Converts lower case char to uuper case
+ * Converts lower case char to uuper case.
  */
 void char_to_upper(char *);
 
