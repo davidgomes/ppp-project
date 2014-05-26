@@ -10,12 +10,12 @@ reservation *reservation_new(client *client, int type)
 
 int reservation_type_str_to_int(char *str, int *integer)
 {
-  if (strcmp(str, "L") == 0)
+  if (!strcmp(str, "L"))
   {
     *integer = RESERVATION_TYPE_CLEANING;
     return 0;
   }
-  else if (strcmp(str, "M") == 0)
+  else if (!strcmp(str, "M"))
   {
     *integer = RESERVATION_TYPE_CHECKING;
     return 0;
@@ -89,9 +89,9 @@ int reservation_request_listing(llist *reservation_list)
 int reservation_request_new(llist *reservation_list, llist *client_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE) == 1)
+  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE))
   {
-    printf("Input incorrecto\n");
+    printf("Input incorreto.\n");
   }
 
   client *request_client;
@@ -122,9 +122,9 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  while (ask_date(&(request_reservation->actual_time)) == 1)
+  while (ask_date(&(request_reservation->actual_time)))
   {
-    printf("Por favor introduza uma data correcta\n");
+    printf("Por favor introduza uma data correta.\n");
   }
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
@@ -171,7 +171,7 @@ void write_reservations(char *file, llist *reservation_list)
 
   if ((fp = fopen(file, "w")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
+    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro.\n");
     return;
   }
 
@@ -207,7 +207,7 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
 
   if ((fp = fopen(file, "r")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro");
+    fprintf(stderr, "Ocorreu um erro.");
     return;
   }
 
@@ -294,19 +294,19 @@ int reservation_type_check(int *request_reservation_type, char *request_reservat
 {
   if (strlen(request_reservation_type_str) != SINGLE_INPUT_SIZE)
   {
-    printf("O input nao tem o tamanho correto\n");
+    printf("O input nao tem o tamanho correto.\n");
     return 1;
   }
 
-  if (check_if_lower(request_reservation_type_str) == 1)
+  if (check_if_lower(request_reservation_type_str))
   {
     char_to_upper(request_reservation_type_str);
   }
 
   if (reservation_type_str_to_int(request_reservation_type_str,
-                                  request_reservation_type) == 1)
+                                  request_reservation_type))
   {
-    printf("O input é incorreto\n");
+    printf("O input é incorreto.\n");
     return 1;
   }
 
@@ -317,28 +317,28 @@ int reservation_request_check(int *reservation_sort_order, char *which_order_str
 {
   if (strlen(which_order_str) != SINGLE_INPUT_SIZE)
   {
-    printf("O input nao tem o tamanho correto\n");
+    printf("O input nao tem o tamanho correto.\n");
     return 1;
   }
 
-  if (check_if_lower(which_order_str) == 1)
+  if (check_if_lower(which_order_str))
   {
     char_to_upper(which_order_str);
   }
 
-  if (strcmp(which_order_str, "R") == 0)
+  if (!strcmp(which_order_str, "R"))
   {
-    *(reservation_sort_order) = 1;
+    *reservation_sort_order = 1;
     return 0;
   }
-  else if (strcmp(which_order_str, "A") == 0)
+  else if (!strcmp(which_order_str, "A"))
   {
-    *(reservation_sort_order) = 0;
+    *reservation_sort_order = 0;
     return 0;
   }
   else
   {
-    printf("O input é incorreto\n");
+    printf("O input é incorreto.\n");
     return 1;
   }
 
