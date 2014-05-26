@@ -89,7 +89,10 @@ int reservation_request_listing(llist *reservation_list)
 int reservation_request_new(llist *reservation_list, llist *client_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE) == 1);
+  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE) == 1)
+  {
+    printf("Input incorrecto\n");
+  }
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
