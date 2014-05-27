@@ -31,9 +31,12 @@ int xtime_validate(xtime *a)
    return 1;
  }
 
- else if ((((!(a->year % 4)) && (a->year % 100) ) || (!(a->year % 400))) &&( (a->month == 2) && (!(a->day >= 1 && a->day <= 29))))
+ else if (((!(a->year % 4)) && (a->year % 100) ) || (!(a->year % 400)))
  {
-   return 1;
+   if ((a->month == 2) && (!(a->day >= 1 && a->day <= 29)))
+   {
+       return 1;
+   }
  }
 
   else if ((a->month == 2) && (!(a->day >= 1 && a->day <= 28)))
