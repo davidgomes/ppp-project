@@ -4,9 +4,10 @@
 #include <stdio.h>
 
 /**
- * The xtime strutcture, used for all kinds of dates.
+ * The xtime structure, used for all kinds of dates.
  */
-typedef struct xtime {
+typedef struct xtime
+{
   int year, month, day;
   int hour, minute;
 } xtime;
