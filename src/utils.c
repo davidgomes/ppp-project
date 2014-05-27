@@ -93,6 +93,13 @@ int ask_date(xtime *save_where)
 
   strtok(actual_time, "\n");
 
+  if (strlen(actual_time) == MAX_TIME_CHARS - 1)
+  {
+    dump_line(stdin);
+    return 1;
+  }
+
+
   for (i = 0; actual_time[i] != '\0'; i++)
   {
     c = strchr(permited_chars, actual_time[i]);
