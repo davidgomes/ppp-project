@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.H>
+#include <time.h>
 
 #include "xtime.h"
 #include "colors.h"
