@@ -132,15 +132,14 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  while (ask_date(&(request_reservation->actual_time)))
+  while (ask_date(&(request_reservation->actual_time)) || xtime_validate(&(request_reservation->actual_time)))
   {
     printf("Por favor introduza uma data correta.\n");
   }
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
-    printf("Não pode reservar para o passado.\n");
-    dump_line(stdin);
+    printf("Não pode reservar para o passado.\n"); 
     return 0;
   }
 
