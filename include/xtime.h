@@ -17,7 +17,7 @@ typedef struct xtime {
 int xtime_comp(xtime*, xtime*);
 
 /**
- * Validate the xtime input
+ * Validate a given xtime.
  */
 int xtime_validate(xtime*);
 
