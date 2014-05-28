@@ -96,7 +96,6 @@ int ask_date(xtime *save_where)
     return 1;
   }
 
-
   for (i = 0; actual_time[i] != '\0'; i++)
   {
     c = strchr(permited_chars, actual_time[i]);
