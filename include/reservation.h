@@ -92,7 +92,7 @@ void reservation_sort(llist*, int);
 int reservation_type_check(int*, char*);
 
 /**
- * Function that checks the input of the order in which the reservations will be displayed
+ * Function that checks the input of the order in which the reservations will be displayed.
  */
 int reservation_request_check(int*, char*);
 
@@ -102,5 +102,14 @@ int reservation_request_check(int*, char*);
 void outdated_reservation_remove(llist *);
 
 
+/**
+ * Returns the duration in minutes of a reservation according to its type in the statement.
+ */
+int reservation_get_duration_mins(reservation*);
+
+/**
+ * Finds out whether a given time collides with any reservation.
+ */
+reservation *reservation_any_collision(reservation*, llist*);
 
 #endif

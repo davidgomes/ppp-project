@@ -14,9 +14,10 @@ void main_loop()
 
       if (which_option == 1)
       {
+
         clear_screen();
-        
-        while (!reservation_request_new(reservation_list, client_list))
+
+        while (reservation_request_new(reservation_list, client_list))
         {
 
         }
