@@ -343,3 +343,23 @@ int reservation_request_check(int *reservation_sort_order, char *which_order_str
 
   return 0;
 }
+
+void outdated_reservation_remove(llist *reservation_list)
+{
+  time_t current_time = time(NULL);
+  xtime current_xtime;
+  lnode *start = reservation_list->root;
+
+  time_t_to_xtime(&current_xtime, &current_time);
+
+  while (start != NULL)
+  {
+    if (xtime_comp(&(((reservation*) start->value)->actual_time), &current_xtime) < 0)
+    {
+      llist_remove(reservation_list, start->value); 
+    }
+
+    start = start->next;
+  }
+
+}

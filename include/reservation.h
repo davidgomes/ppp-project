@@ -96,4 +96,11 @@ int reservation_type_check(int*, char*);
  */
 int reservation_request_check(int*, char*);
 
+/**
+ * Function that removes outdated reservations
+ */
+void outdated_reservation_remove(llist *);
+
+
+
 #endif
