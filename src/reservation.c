@@ -85,8 +85,8 @@ int reservation_request_listing(llist *reservation_list)
 
   do
   {
-   get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
-                 which_order_str, MAX_CHAR);
+    get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
+                  which_order_str, MAX_CHAR);
 
   } while (reservation_request_check(&reservation_sort_order, which_order_str));
 
@@ -139,7 +139,20 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
-    printf("Não pode reservar para o passado.\n"); 
+    printf("Não pode reservar para o passado.\n");
+    return 1;
+  }
+
+  reservation *find_collision = reservation_any_collision(request_reservation, reservation_list);
+
+  if (find_collision)
+  {
+    char collision_date[MAX_TIME_CHARS];
+    time_to_str(&(find_collision->actual_time), collision_date);
+    printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
+
+    // TODO Introduzir como pre-reserva
+    
     return 0;
   }
 
@@ -147,7 +160,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
 
   printf("%p\n", request_client);
 
-  return 1;
+  return 0;
 }
 
 int reservation_request_cancel(llist *reservation_list)
@@ -352,4 +365,54 @@ int reservation_request_check(int *reservation_sort_order, char *which_order_str
   }
 
   return 0;
+}
+
+int reservation_get_duration_mins(reservation *which)
+{
+  if (which->type == RESERVATION_TYPE_CLEANING)
+  {
+    return 30; // Cleanings take 30 minutes...
+  }
+  else
+  {
+    return 60; // ... but checkings take 60 minutes.
+  }
+}
+
+reservation *reservation_any_collision(reservation *which, llist *reservation_list)
+{
+  lnode *current_node = reservation_list->root;
+
+  xtime start_of_which = which->actual_time;
+  xtime end_of_which = start_of_which;
+  end_of_which.minute += reservation_get_duration_mins(which);
+
+  while (current_node != NULL)
+  {
+    reservation *current = (reservation*) current_node->value;
+
+    xtime start_of_current = current->actual_time;
+    xtime end_of_current = start_of_current;
+    end_of_current.minute += reservation_get_duration_mins(current);
+
+    /* Check if "which" starts during current */
+
+    if (xtime_comp(&start_of_which, &start_of_current) >= 0 &&
+        xtime_comp(&start_of_which, &end_of_current) <= 0)
+    {
+      return current;
+    }
+
+    /* Check if "which" ends during current */
+
+    if (xtime_comp(&end_of_which, &start_of_current) >= 0 &&
+        xtime_comp(&end_of_which, &end_of_current) <= 0)
+    {
+      return current;
+    }
+
+    current_node = current_node->next;
+  }
+
+  return NULL;
 }
