@@ -14,7 +14,7 @@ void main_loop()
 
       if (which_option == 1)
       {
-        while (!reservation_request_new(reservation_list, client_list))
+        while (reservation_request_new(reservation_list, client_list, pre_reservation_list))
         {
 
         }
@@ -25,6 +25,8 @@ void main_loop()
       }
       else if (which_option == 2)
       {
+        clear_screen();
+
         while (!reservation_request_cancel(reservation_list))
         {
 
@@ -60,6 +62,7 @@ int main()
 {
   client_list = llist_new();
   reservation_list = llist_new();
+  pre_reservation_list = llist_new();
 
   read_client("clients.txt", client_list);
   read_reservation("reservations.txt", client_list, reservation_list);
@@ -67,6 +70,7 @@ int main()
   menu_load();
   main_loop();
 
+  reservation_remove_outdated(reservation_list);
   write_client("clients.txt", client_list);
   write_reservations("reservations.txt", reservation_list);
 

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "reservation_struct.h"
+#include "pre_reservation.h"
 #include "client.h"
 #include "llist.h"
 #include "xtime.h"
@@ -18,24 +20,6 @@
  * Manutenção.
  */
 #define RESERVATION_TYPE_CHECKING 2
-
-/**
- * Duração de qualquer tipo de reservas, em minutos.
- */
-#define RESERVATION_DURATION 30
-
-/**
- * The reservation structure that holds reservations.
- */
-typedef struct reservation
-{
-  client *client;
-
-  int type;
-
-  xtime register_time;
-  xtime actual_time;
-} reservation;
 
 /**
  * Allocates memory for and returns a new instance of a reservation.
@@ -65,7 +49,7 @@ int reservation_request_listing(llist*);
 /**
  * Handles users asking to make a new reservation.
  */
-int reservation_request_new(llist*, llist*);
+int reservation_request_new(llist*, llist*, llist*);
 
 /**
  * Handles users asking to cancel a reservation.
@@ -101,5 +85,20 @@ int reservation_type_check(int*, char*);
  * Function that checks the input of the order in which the reservations will be displayed.
  */
 int reservation_request_check(int*, char*);
+
+/**
+ * Function that removes outdated reservations
+ */
+void reservation_remove_outdated(llist*);
+
+/**
+ * Returns the duration in minutes of a reservation according to its type in the statement.
+ */
+int reservation_get_duration_mins(reservation*);
+
+/**
+ * Finds out whether a given time collides with any reservation.
+ */
+reservation *reservation_any_collision(reservation*, llist*);
 
 #endif
