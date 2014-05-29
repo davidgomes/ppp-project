@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "reservation_struct.h"
+#include "pre_reservation.h"
 #include "client.h"
 #include "llist.h"
 #include "xtime.h"
@@ -17,19 +19,6 @@
  * Manutenção.
  */
 #define RESERVATION_TYPE_CHECKING 2
-
-/**
- * The reservation structure that holds reservations.
- */
-typedef struct reservation
-{
-  client *client;
-
-  int type;
-
-  xtime register_time;
-  xtime actual_time;
-} reservation;
 
 /**
  * Allocates memory for and returns a new instance of a reservation.
@@ -59,7 +48,7 @@ int reservation_request_listing(llist*);
 /**
  * Handles users asking to make a new reservation.
  */
-int reservation_request_new(llist*, llist*);
+int reservation_request_new(llist*, llist*, llist*);
 
 /**
  * Handles users asking to cancel a reservation.

@@ -20,6 +20,11 @@ llist *client_list;
 llist *reservation_list;
 
 /**
+ * The list of pre-reservations.
+ */
+llist *pre_reservation_list;
+
+/**
  * The main loop that runs the application's core.
  */
 void main_loop();

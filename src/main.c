@@ -14,7 +14,7 @@ void main_loop()
 
       if (which_option == 1)
       {
-        while (reservation_request_new(reservation_list, client_list))
+        while (reservation_request_new(reservation_list, client_list, pre_reservation_list))
         {
 
         }
@@ -60,6 +60,7 @@ int main()
 {
   client_list = llist_new();
   reservation_list = llist_new();
+  pre_reservation_list = llist_new();
 
   read_client("clients.txt", client_list);
   read_reservation("reservations.txt", client_list, reservation_list);

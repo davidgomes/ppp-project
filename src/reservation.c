@@ -86,7 +86,7 @@ int reservation_request_listing(llist *reservation_list)
   return 1;
 }
 
-int reservation_request_new(llist *reservation_list, llist *client_list)
+int reservation_request_new(llist *reservation_list, llist *client_list, llist *pre_reservation_list)
 {
   char request_client_name[MAX_NAME_SIZE];
   while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE))
@@ -141,8 +141,16 @@ int reservation_request_new(llist *reservation_list, llist *client_list)
     time_to_str(&(find_collision->actual_time), collision_date);
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
-    // TODO Introduzir como pre-reserva
-    
+    do
+    {
+      char pre_reservation_decision_str[MAX_CHAR];
+      get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",
+                    pre_reservation_decision_str, MAX_CHAR);
+
+      // TODO Actually do shit about G/M, for now just always pre-reserve.
+      pre_reservation_request_new(pre_reservation_list, request_reservation);
+    } while (0);
+
     return 0;
   }
 
