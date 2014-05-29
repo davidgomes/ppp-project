@@ -365,7 +365,7 @@ int reservation_request_check(int *reservation_sort_order, char *which_order_str
   return 0;
 }
 
-void outdated_reservation_remove(llist *reservation_list)
+void reservation_remove_outdated(llist *reservation_list)
 {
   time_t current_time = time(NULL);
   xtime current_xtime;

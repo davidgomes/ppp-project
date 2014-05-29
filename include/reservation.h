@@ -88,8 +88,7 @@ int reservation_request_check(int*, char*);
 /**
  * Function that removes outdated reservations
  */
-void outdated_reservation_remove(llist *);
-
+void reservation_remove_outdated(llist*);
 
 /**
  * Returns the duration in minutes of a reservation according to its type in the statement.
