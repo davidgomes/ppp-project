@@ -11,7 +11,8 @@ void clear_screen()
 
 int get_str_input(char *say_what, char *save_where, int input_size)
 {
-  printf("%s", say_what);
+  printf("%s%s", COLOR_GREEN, say_what);
+  reset_color();
 
   if (fgets(save_where, input_size, stdin) == NULL)
   {
@@ -33,7 +34,8 @@ int get_int_input(char *say_what, int *save_where)
 {
   char temp_buffer[MAX_INT_DIGITS];
   int i;
-  printf("%s", say_what);
+  printf("%s%s", COLOR_GREEN, say_what);
+  reset_color();
 
   if (fgets(temp_buffer, MAX_INT_DIGITS, stdin) == NULL)
   {
@@ -84,7 +86,8 @@ int ask_date(xtime *save_where)
 
   printf("São agora %s\n", current_time_str);
 
-  printf("Insira a data que prentende, no formato DD/MM/AAAA HH:MM: ");
+  printf("%sInsira a data que prentende, no formato DD/MM/AAAA HH:MM: ", COLOR_GREEN);
+  reset_color();
 
   fgets(actual_time, MAX_TIME_CHARS, stdin);
 

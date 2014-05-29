@@ -18,7 +18,7 @@ void menu_show()
     printf("%s%d: %s.\n", COLOR_YELLOW, option, options[option - 1]);
   }
 
-  printf("%s", COLOR_WHITE);
+  reset_color();
 }
 
 int menu_wait()

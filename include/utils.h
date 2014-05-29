@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.H>
+#include <time.h>
 
 #include "xtime.h"
+#include "colors.h"
 
 #define MAX_INT_DIGITS 32
 #define MAX_TIME_CHARS 128
@@ -16,7 +17,7 @@
 /**
  * Clears the screen.
  */
-void clear_screen();
+void clear_screen(void);
 
 /**
  * Reads some string input.

@@ -9,6 +9,7 @@
 #include "client.h"
 #include "llist.h"
 #include "xtime.h"
+#include "colors.h"
 
 /**
  * Lavagem.
