@@ -48,6 +48,7 @@ void reservation_print(reservation *which)
 
   printf("%sTrata-se de uma: ", COLOR_CYAN);
   reset_color();
+
   if (which->type == RESERVATION_TYPE_CLEANING)
   {
     printf("lavagem.\n");

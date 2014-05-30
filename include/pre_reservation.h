@@ -8,12 +8,12 @@
 int pre_reservation_request_new(llist*, reservation*);
 
 /**
- * Writes the pre_reservations to a file
+ * Writes the pre_reservations to a file.
  */
 void write_pre_reservations(char*, llist*);
 
 /**
- * Reads the pre_reservations from a file to the structs
+ * Reads the pre_reservations from a file to the structs.
  */
 void read_pre_reservation(char*, llist*, llist*);
 
