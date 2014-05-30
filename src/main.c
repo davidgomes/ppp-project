@@ -14,14 +14,26 @@ void main_loop()
 
       if (which_option == 1)
       {
-        while (reservation_request_new(reservation_list, client_list, pre_reservation_list))
+        int option_1_aux;
+        option_1_aux = reservation_request_new(reservation_list, client_list, pre_reservation_list);
+        if (option_1_aux == 1)
         {
-
+          printf("Nao conseguimos concluir a operaçao\n");
+          break;
         }
-
-        clear_screen();
-
-        printf("Reserva adicionada com sucesso.\n\n");
+        
+        else if (option_1_aux == 2)
+        {
+          break;
+        }
+        
+        else
+        {
+          clear_screen();
+          
+          printf("Reserva adicionada com sucesso.\n\n");
+          
+        }
       }
       else if (which_option == 2)
       {

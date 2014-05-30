@@ -148,18 +148,25 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   if (find_collision)
   {
     char collision_date[MAX_TIME_CHARS];
+    char pre_reservation_decision_str[MAX_CHAR];
     time_to_str(&(find_collision->actual_time), collision_date);
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
     do
     {
-      char pre_reservation_decision_str[MAX_CHAR];
       get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",
                     pre_reservation_decision_str, MAX_CHAR);
+    } while ((pre_reservation_request_check(pre_reservation_decision_str)) == 1);
 
-      // TODO Actually do shit about G/M, for now just always pre-reserve.
-      pre_reservation_request_new(pre_reservation_list, request_reservation);
-    } while (0);
+    if ((pre_reservation_request_check(pre_reservation_decision_str)) == 2)
+    {
+      return 2;
+    }
+
+    else
+    {
+       pre_reservation_request_new(pre_reservation_list, request_reservation);
+    }
 
     return 0;
   }
@@ -442,4 +449,34 @@ reservation *reservation_any_collision(reservation *which, llist *reservation_li
   }
 
   return NULL;
+}
+
+int pre_reservation_request_check(char *pre_reservation_decision_str)
+{
+  if (strlen(pre_reservation_decision_str) != SINGLE_INPUT_SIZE)
+  {
+    printf("O input nao tem o tamanho correto.\n");
+    return 1;
+  }
+
+  if (check_if_lower(pre_reservation_decision_str))
+  {
+    char_to_upper(pre_reservation_decision_str);
+  }
+
+  if (!strcmp(pre_reservation_decision_str, "G"))
+  {
+    return 0;
+  }
+  else if (!strcmp(pre_reservation_decision_str, "M"))
+  {
+    return 2;
+  }
+  else
+  {
+    printf("O input é incorreto.\n");
+    return 1;
+  }
+
+  return 0;
 }

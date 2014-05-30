@@ -101,4 +101,9 @@ int reservation_get_duration_mins(reservation*);
  */
 reservation *reservation_any_collision(reservation*, llist*);
 
+/**
+ * Function to protect the input of the option pre-reservation/change date
+ */
+int pre_reservation_request_check(char *);
+
 #endif
