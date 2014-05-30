@@ -84,9 +84,13 @@ int main()
   main_loop();
 
   reservation_remove_outdated(reservation_list);
+  reservation_remove_outdated(pre_reservation_list);
   write_client("clients.txt", client_list);
   write_reservations("reservations.txt", reservation_list);
   write_pre_reservations("pre_reservations.txt", pre_reservation_list);
+  llist_destroy(client_list);
+  llist_destroy(reservation_list);
+  llist_destroy(pre_reservation_list);
 
   return 0;
 }
