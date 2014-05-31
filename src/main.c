@@ -82,6 +82,30 @@ void main_loop()
         }
         
       }
+      else if (which_option == 4)
+      {
+        clear_screen();
+        int option_4_aux = reservation_request_listing(pre_reservation_list);
+        
+
+        if (option_4_aux == 1)
+        {
+          break;
+        }
+        
+        else if (option_4_aux == 2)
+        {
+          clear_screen();
+          break;
+        }
+
+        else
+        {
+          
+        }
+        
+      }
+      
       else if (which_option == 5)
       {
         clear_screen();
