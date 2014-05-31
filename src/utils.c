@@ -27,6 +27,11 @@ int get_str_input(char *say_what, char *save_where, int input_size)
     return 1;
   }
 
+  if (!strcmp(save_where, "0"))
+  {
+    return 2;
+  }
+
   return 0;
 }
 
@@ -57,6 +62,11 @@ int get_int_input(char *say_what, int *save_where)
       return 1;
     }
   }
+  
+  if (!strcmp(temp_buffer, "0"))
+    {
+      return 2;
+    }
 
   *save_where = atoi(temp_buffer);
   return 0;
@@ -89,9 +99,17 @@ int ask_date(xtime *save_where)
   printf("%sInsira a data que prentende, no formato DD/MM/AAAA HH:MM: ", COLOR_GREEN);
   reset_color();
 
-  fgets(actual_time, MAX_TIME_CHARS, stdin);
+  if (fgets(actual_time, MAX_TIME_CHARS, stdin) == NULL)
+  {
+    return 1;
+  }
 
   strtok(actual_time, "\n");
+
+  if (!strcmp(actual_time, "0"))
+  {
+    return 2;
+  }
 
   if (strlen(actual_time) == MAX_TIME_CHARS - 1)
   {

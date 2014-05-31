@@ -38,12 +38,13 @@ int client_request_print(llist *client_list)
   if (found_client == NULL)
   {
     printf("Cliente não encontrado, verifique o nome introduzido.\n");
-    return 0;
+    return 1;
   }
   else
   {
     return client_print(found_client);
   }
+  return 0;
 }
 
 int client_print(client *which)
@@ -51,13 +52,13 @@ int client_print(client *which)
   if (which == NULL)
   {
     printf("Client não encontrado em client_print.\n");
-    return 0;
+    return 1;
   }
 
   printf("Printing information on %s\n", which->name);
   printf("%d\n", which->id);
 
-  return 1;
+  return 0;
 }
 
 void write_client(char *file, llist *client_list)

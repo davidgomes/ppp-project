@@ -85,24 +85,32 @@ int reservation_request_listing(llist *reservation_list)
 
   do
   {
-    get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
-                  which_order_str, MAX_CHAR);
+    if (get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
+                      which_order_str, MAX_CHAR) == 2)
+    {
+      return 2;
+    }
+    
 
   } while (reservation_request_check(&reservation_sort_order, which_order_str));
 
   reservation_sort(reservation_list, reservation_sort_order);
 
   reservation_listing(reservation_list->root, 1);
-  return 1;
+  return 0;
 }
 
 int reservation_request_new(llist *reservation_list, llist *client_list, llist *pre_reservation_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE))
+  int aux;
+  do 
   {
-    printf("Input incorreto.\n");
+    aux = get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
+    if (aux == 2)
+      return 2;
   }
+  while(aux == 1);
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
@@ -119,8 +127,9 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
 
   do
   {
-    get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
-                  request_reservation_type_str, MAX_CHAR);
+    if (get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
+                      request_reservation_type_str, MAX_CHAR) == 2)
+      return 2;
 
   } while (reservation_type_check(&request_reservation_type,
                                   request_reservation_type_str));
@@ -132,15 +141,22 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  while (ask_date(&(request_reservation->actual_time)) || xtime_validate(&(request_reservation->actual_time)))
+  int date_aux;
+  do
   {
-    printf("Por favor introduza uma data correta.\n");
+    date_aux = ask_date(&(request_reservation->actual_time));
+    if (date_aux == 2)
+    {
+      return 2;
+    }
   }
+  while ( xtime_validate(&(request_reservation->actual_time)));
+ 
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
-    printf("Não pode reservar para o passado.\n");
     clear_screen();
+    printf("Não pode reservar para o passado.\n\n"); 
     return 1;
   }
 
@@ -183,7 +199,10 @@ int reservation_request_cancel(llist *reservation_list)
 {
   printf("Listando todas as reservas.\n\n");
 
-  reservation_request_listing(reservation_list);
+  if (reservation_request_listing(reservation_list) == 2)
+  {
+    return 2;
+  }
 
   int which_reservation;
   get_int_input("Insira o número da reserva que deseja cancelar: ",

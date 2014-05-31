@@ -14,8 +14,7 @@ void main_loop()
 
       if (which_option == 1)
       {
-        int option_1_aux;
-        option_1_aux = reservation_request_new(reservation_list, client_list, pre_reservation_list);
+        int option_1_aux = reservation_request_new(reservation_list, client_list, pre_reservation_list);
         if (option_1_aux == 1)
         {
           printf("Nao conseguimos concluir a operaçao\n");
@@ -24,6 +23,7 @@ void main_loop()
         
         else if (option_1_aux == 2)
         {
+          clear_screen();
           break;
         }
         
@@ -37,33 +37,63 @@ void main_loop()
       }
       else if (which_option == 2)
       {
+        int option_2_aux = reservation_request_cancel(reservation_list);
         clear_screen();
 
-        while (!reservation_request_cancel(reservation_list))
+       if (option_2_aux == 1)
         {
-
+          printf("Nao conseguimos concluir a operaçao\n");
+          break;
         }
-
-        clear_screen();
-
-        printf("Reserva cancelada com sucesso.\n\n");
+        
+        else if (option_2_aux == 2)
+        {
+          break;
+        }
+        
+        else
+        {
+          clear_screen();
+          printf("Reserva cancelada com sucesso.\n\n");
+          
+        }
       }
       else if (which_option == 3)
       {
         clear_screen();
+        int option_3_aux = reservation_request_listing(reservation_list);
+        
 
-        while (!reservation_request_listing(reservation_list))
+        if (option_3_aux == 1)
         {
-
+          break;
         }
+        
+        else if (option_3_aux == 2)
+        {
+          break;
+        }
+
+        else
+        {
+          
+        }
+        
       }
       else if (which_option == 4)
       {
         clear_screen();
-
-        while (!client_request_print(client_list))
+        int option_4_aux = client_request_print(client_list);
+        
+        if (option_4_aux == 1)
         {
-
+          printf("Nao conseguimos concluir a operaçao\n");
+          break;
+        }
+        
+        else if (option_4_aux == 2)
+        {
+          break;
         }
       }
     } while (which_option <= 0);
