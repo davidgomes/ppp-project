@@ -212,12 +212,12 @@ int reservation_request_cancel(llist *reservation_list)
       which_reservation < 1)
   {
     printf("Não existe um item correspondente ao número que escolheu.\n");
-    return 0;
+    return 1;
   }
 
   llist_remove_by_index(reservation_list, which_reservation - 1);
 
-  return 1;
+  return 0;
 }
 
 void write_reservations(char *file, llist *reservation_list)
