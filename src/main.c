@@ -48,6 +48,7 @@ void main_loop()
         
         else if (option_2_aux == 2)
         {
+          clear_screen();
           break;
         }
         
@@ -71,6 +72,7 @@ void main_loop()
         
         else if (option_3_aux == 2)
         {
+          clear_screen();
           break;
         }
 
@@ -80,19 +82,20 @@ void main_loop()
         }
         
       }
-      else if (which_option == 4)
+      else if (which_option == 5)
       {
         clear_screen();
-        int option_4_aux = client_request_print(client_list);
+        int option_5_aux = client_request_print(client_list);
         
-        if (option_4_aux == 1)
+        if (option_5_aux == 1)
         {
           printf("Nao conseguimos concluir a operaçao\n");
           break;
         }
         
-        else if (option_4_aux == 2)
+        else if (option_5_aux == 2)
         {
+          clear_screen();
           break;
         }
       }
