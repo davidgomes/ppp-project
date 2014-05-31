@@ -105,11 +105,10 @@ void main_loop()
         }
         
       }
-      
       else if (which_option == 5)
       {
+        int option_5_aux = reservation_request_cancel(pre_reservation_list);
         clear_screen();
-        int option_5_aux = client_request_print(client_list);
         
         if (option_5_aux == 1)
         {
@@ -118,6 +117,30 @@ void main_loop()
         }
         
         else if (option_5_aux == 2)
+        {
+          clear_screen();
+          break;
+        }
+        
+        else
+        {
+          clear_screen();
+          printf("Reserva cancelada com sucesso.\n\n");
+          
+        }
+      }
+      else if (which_option == 6)
+      {
+        clear_screen();
+        int option_6_aux = client_request_print(client_list);
+        
+        if (option_6_aux == 1)
+        {
+          printf("Nao conseguimos concluir a operaçao\n");
+          break;
+        }
+        
+        else if (option_6_aux == 2)
         {
           clear_screen();
           break;
