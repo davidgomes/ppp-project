@@ -537,6 +537,7 @@ int pre_reservation_request_check(char *pre_reservation_decision_str)
 void reservation_update_pre_reservations(llist *reservation_list, llist *pre_reservation_list)
 {
   lnode *current_node = pre_reservation_list->root;
+  int how_many = 0;
 
   while (current_node != NULL)
   {
@@ -549,15 +550,20 @@ void reservation_update_pre_reservations(llist *reservation_list, llist *pre_res
       llist_insert(reservation_list, current_pre_reservation);
 
       llist_remove(pre_reservation_list, current_pre_reservation);
+
+      how_many++;
     }
 
     current_node = current_node->next;
   }
 
-  printf("Uma ou mais pré-reservas foram movidas das pré-reservas para as reservas.\n");
+  if (how_many)
+  {
+    printf("Uma ou mais pré-reservas foram movidas das pré-reservas para as reservas.\n");
   
-  write_reservations("reservations.txt", reservation_list);
-  write_reservations("pre_reservations.txt", pre_reservation_list);
+    write_reservations("reservations.txt", reservation_list);
+    write_reservations("pre_reservations.txt", pre_reservation_list);
+  }
 }
 
 void reservation_list_reservations_by_client(client *request_client, llist *reservation_list,
