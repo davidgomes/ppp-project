@@ -296,7 +296,6 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
 
   if ((fp = fopen(file, "r")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro.");
     return;
   }
 
