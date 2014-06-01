@@ -5,6 +5,7 @@ void main_loop()
   int which_option = -1;
 
   clear_screen();
+  printf("Quer voltar para o menu principal estando noutra localização? Insira '0'.\n");
 
   while (which_option != EXIT_OPTION)
   {
@@ -228,7 +229,7 @@ int main()
 
   reservation_update_pre_reservations(reservation_list, pre_reservation_list);
 
-  /* Start the actual application */
+  /* Start the actual application */  
   menu_load();
   main_loop();
 
