@@ -35,6 +35,11 @@ void main_loop()
       }
       else if (which_option == 2)
       {
+        if (llist_get_size(reservation_list) == 0)
+        {
+          printf("A lista está vazia\n\n");
+          break;
+        }
         int option_2_aux = reservation_request_cancel(reservation_list);
         clear_screen();
 
@@ -56,6 +61,11 @@ void main_loop()
       }
       else if (which_option == 3)
       {
+        if (llist_get_size(reservation_list) == 0)
+        {
+          printf("A lista está vazia\n\n");
+          break;
+        }
         clear_screen();
         int option_3_aux = reservation_request_listing(reservation_list);
 
@@ -75,6 +85,11 @@ void main_loop()
       }
       else if (which_option == 4)
       {
+        if (llist_get_size(pre_reservation_list) == 0)
+        {
+          printf("A lista está vazia\n\n");
+          break;
+        }
         clear_screen();
         int option_4_aux = reservation_request_listing(pre_reservation_list);
 
@@ -94,6 +109,11 @@ void main_loop()
       }
       else if (which_option == 5)
       {
+        if (llist_get_size(pre_reservation_list) == 0)
+        {
+          printf("A lista está vazia\n\n");
+          break;
+        }
         int option_5_aux = reservation_request_cancel(pre_reservation_list);
         clear_screen();
 
