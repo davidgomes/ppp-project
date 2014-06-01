@@ -218,8 +218,6 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   llist_insert(reservation_list, request_reservation);
   write_reservations("reservations.txt", reservation_list);
 
-  printf("%p\n", request_client);
-
   return 0;
 }
 
