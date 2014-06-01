@@ -55,7 +55,7 @@ void dump_line(FILE*);
 int check_if_lower(char*);
 
 /**
- * Converts lower case char to uuper case.
+ * Converts lower case char to upper case.
  */
 void char_to_upper(char *);
 
