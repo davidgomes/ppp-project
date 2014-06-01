@@ -79,7 +79,6 @@ void read_client(char *file, llist *client_list)
 
   if ((fp = fopen(file, "r")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro.\n");
     return;
   }
 
