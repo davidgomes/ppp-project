@@ -142,11 +142,13 @@ void main_loop()
         if (llist_get_size(client_list) == 0)
         {
           printf("Não existem clientes.\n\n");
+          break;
         }
 
         if (llist_get_size(reservation_list) == 0)
         {
           printf("Não existem reservas.\n\n");
+          break;
         }
         
         char client_name_str[MAX_NAME_SIZE];
@@ -176,11 +178,13 @@ void main_loop()
         if (llist_get_size(client_list) == 0)
         {
           printf("Não existem clientes.\n\n");
+          break;
         }
 
         if (llist_get_size(pre_reservation_list) == 0)
         {
           printf("Não existem pré reservas.\n\n");
+          break;
         }
         
         char client_name_str[MAX_NAME_SIZE];

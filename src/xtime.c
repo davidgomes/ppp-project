@@ -38,7 +38,7 @@ int xtime_validate(xtime *a)
   {
     return 1;
   }
-  else if (!(a->hour >= 0 && a->hour <= 23))
+  else if (!(a->hour >= 8 && a->hour <= 17))
   {
     return 1;
   }
