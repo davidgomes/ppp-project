@@ -22,6 +22,16 @@
 #define RESERVATION_TYPE_CHECKING 2
 
 /**
+ * Reserva
+ */
+#define RESERVA 3
+
+/**
+ * Pré-Reserva
+ */
+#define PRE_RESERVA 4
+
+/**
  * Allocates memory for and returns a new instance of a reservation.
  */
 reservation *reservation_new(client*, int);

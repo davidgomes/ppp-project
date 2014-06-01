@@ -25,8 +25,9 @@ void write_pre_reservations(char *file, llist *pre_reservation_list)
   {
     aux = where->value;
 
-    fprintf(fp, "%s, %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+    fprintf(fp, "%s, %d %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
             aux->type,
+            aux->reservation_type,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
@@ -62,8 +63,9 @@ void read_pre_reservation(char *file, llist *client_list, llist *pre_reservation
     client = client_find_by_name(client_list, client_name);
     pre_reservation = reservation_new(client, 1);
 
-    fscanf(fp, "%d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
+    fscanf(fp, "%d  %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
            &(pre_reservation->type),
+           &(pre_reservation->reservation_type),
            &(pre_reservation->register_time.day),
            &(pre_reservation->register_time.month),
            &(pre_reservation->register_time.year),

@@ -11,6 +11,7 @@ typedef struct reservation
   client *client;
 
   int type;
+  int reservation_type;
 
   xtime register_time;
   xtime actual_time;

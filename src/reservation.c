@@ -69,8 +69,20 @@ void reservation_listing(lnode *where, int index)
     return;
   }
 
-  printf("%sListando reserva número %d\n", COLOR_CYAN, index);
-  reset_color();
+  reservation *aux = where->value;
+
+  if (aux->reservation_type == RESERVA)
+  {
+    printf("%sListando reserva número %d\n", COLOR_CYAN, index);
+    reset_color();
+  }
+  else if (aux->reservation_type == PRE_RESERVA)
+  {
+    printf("%sListando pré-reserva número %d\n", COLOR_CYAN, index);
+    reset_color();
+  }
+
+  
   reservation_print((reservation*) where->value);
 
   printf("\n");
@@ -136,6 +148,9 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
+  /*Here i set the reservation type as reserva */
+  request_reservation->reservation_type = 3;
+
   /* Get the current date for the registration date */
   time_t current_time = time(NULL);
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
@@ -182,7 +197,8 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
 
     else
     {
-       pre_reservation_request_new(pre_reservation_list, request_reservation);
+      request_reservation->reservation_type = 4;
+      pre_reservation_request_new(pre_reservation_list, request_reservation);
     }
 
     return 0;
@@ -236,8 +252,9 @@ void write_reservations(char *file, llist *reservation_list)
   {
     aux = where->value;
 
-    fprintf(fp, "%s, %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+    fprintf(fp, "%s, %d %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
             aux->type,
+            aux->reservation_type,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
@@ -273,8 +290,9 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
     client = client_find_by_name(client_list, client_name);
     reservation = reservation_new(client, 1);
 
-    fscanf(fp, "%d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
+    fscanf(fp, "%d %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
            &(reservation->type),
+           &(reservation->reservation_type),
            &(reservation->register_time.day),
            &(reservation->register_time.month),
            &(reservation->register_time.year),
