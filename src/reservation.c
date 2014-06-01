@@ -559,9 +559,10 @@ void reservation_list_reservations_by_client(client *request_client, llist *rese
                                              int pre_reservations)
 {
   lnode *current_node = reservation_list->root;
-  clear_screen();
 
   int many_found = 0;
+
+  clear_screen();
 
   while (current_node != NULL)
   {
@@ -575,7 +576,7 @@ void reservation_list_reservations_by_client(client *request_client, llist *rese
       }
       else
       {
-        printf("%sListando pré reserva número %d\n", COLOR_CYAN, ++many_found);        
+        printf("%sListando pré reserva número %d\n", COLOR_CYAN, ++many_found);
       }
 
       reset_color();
