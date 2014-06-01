@@ -7,7 +7,7 @@
 #include "utils.h"
 #include "colors.h"
 
-#define N_OPTIONS 8
+#define N_OPTIONS 9
 #define EXIT_OPTION N_OPTIONS
 
 /**

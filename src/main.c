@@ -151,7 +151,7 @@ void main_loop()
           printf("Não existem reservas.\n\n");
           break;
         }
-        
+
         char client_name_str[MAX_NAME_SIZE];
         int option_6_aux = 1;
 
@@ -187,7 +187,7 @@ void main_loop()
           printf("Não existem pré reservas.\n\n");
           break;
         }
-        
+
         char client_name_str[MAX_NAME_SIZE];
         int option_6_aux = 1;
 
@@ -210,6 +210,33 @@ void main_loop()
           break;
         }
       }
+      else if (which_option == 8)
+      {
+        clear_screen();
+        printf("Programa feito por:\n");
+
+        printf("%s", COLOR_BLUE);
+
+        printf("      _             _     _                                   \n");
+        printf("   __| | __ ___   _(_) __| |   __ _  ___  _ __ ___   ___  ___ \n");
+        printf("  / _` |/ _` \\ \\ / / |/ _` |  / _` |/ _ \\| '_ ` _ \\ / _ \\/ __|\n");
+        printf(" | (_| | (_| |\\ V /| | (_| | | (_| | (_) | | | | | |  __/\\__ \\\n");
+        printf("  \\__,_|\\__,_| \\_/ |_|\\__,_|  \\__, |\\___/|_| |_| |_|\\___||___/\n");
+        printf("                              |___/                           \n");
+
+        printf("\n%s", COLOR_CYAN);
+
+        printf("    _        /\\/|                                  _           \n");
+        printf("   (_) ___  |/\\/_  ___     ___ _ __ __ ___   _____(_)_ __ ___  \n");
+        printf("   | |/ _ \\ / _` |/ _ \\   / __| '__/ _` \\ \\ / / _ \\ | '__/ _ \\ \n");
+        printf("   | | (_) | (_| | (_) | | (__| | | (_| |\\ V /  __/ | | | (_) |\n");
+        printf("  _/ |\\___/ \\__,_|\\___/   \\___|_|  \\__,_| \\_/ \\___|_|_|  \\___/ \n");
+        printf(" |__/                                                          \n");
+
+        reset_color();
+
+        printf("\n");
+      }
     } while (which_option <= 0);
   }
 }
@@ -229,7 +256,7 @@ int main()
 
   reservation_update_pre_reservations(reservation_list, pre_reservation_list);
 
-  /* Start the actual application */  
+  /* Start the actual application */
   menu_load();
   main_loop();
 
