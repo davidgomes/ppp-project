@@ -10,6 +10,7 @@
 #include "llist.h"
 #include "xtime.h"
 #include "colors.h"
+#include "main.h"
 
 /**
  * Lavagem.

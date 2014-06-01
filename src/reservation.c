@@ -131,6 +131,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   {
     request_client = client_new(request_client_name);
     llist_insert(client_list, request_client);
+    write_client("clients.txt", client_list);
   }
 
   /* Asks the user for what type of a reservation it is. */
@@ -205,6 +206,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   }
 
   llist_insert(reservation_list, request_reservation);
+  write_reservations("reservations.txt", reservation_list);
 
   printf("%p\n", request_client);
 
@@ -221,8 +223,11 @@ int reservation_request_cancel(llist *reservation_list)
   }
 
   int which_reservation;
-  get_int_input("Insira o número da reserva que deseja cancelar: ",
-                &which_reservation);
+  if (get_int_input("Insira o número da reserva que deseja cancelar: ",
+                    &which_reservation) == 2)
+  {
+    return 2;
+  }
 
   if (which_reservation > llist_get_size(reservation_list) ||
       which_reservation < 1)
@@ -232,6 +237,8 @@ int reservation_request_cancel(llist *reservation_list)
   }
 
   llist_remove_by_index(reservation_list, which_reservation - 1);
+  write_reservations("reservations.txt", reservation_list);
+  write_pre_reservations("pre_reservations.txt", pre_reservation_list);
 
   return 0;
 }

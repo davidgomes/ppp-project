@@ -6,6 +6,7 @@ int pre_reservation_request_new(llist *pre_reservation_list, reservation *reques
   /* reservation *request is the original reservation */
 
   llist_insert(pre_reservation_list, request);
+  write_pre_reservations("pre_reservations.txt", pre_reservation_list);
   return 0;
 }
 
