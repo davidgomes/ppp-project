@@ -42,6 +42,7 @@ void main_loop()
         }
 
         int option_2_aux = reservation_request_cancel(reservation_list);
+        reservation_update_pre_reservations(reservation_list, pre_reservation_list);
         clear_screen();
 
         if (option_2_aux == 1)
@@ -117,6 +118,7 @@ void main_loop()
         }
 
         int option_5_aux = reservation_request_cancel(pre_reservation_list);
+        reservation_update_pre_reservations(reservation_list, pre_reservation_list);
         clear_screen();
 
         if (option_5_aux == 1)
@@ -167,6 +169,8 @@ int main()
 
   reservation_remove_outdated(reservation_list);
   reservation_remove_outdated(pre_reservation_list);
+
+  reservation_update_pre_reservations(reservation_list, pre_reservation_list);
 
   /* Start the actual application */
   menu_load();

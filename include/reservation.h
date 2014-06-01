@@ -117,4 +117,10 @@ reservation *reservation_any_collision(reservation*, llist*);
  */
 int pre_reservation_request_check(char*);
 
+/**
+ * Updates pre reservations into the reservation list if possible. This function should be
+ * called after any removal either from the reservation or the pre reservation list.
+ */
+void reservation_update_pre_reservations(llist*, llist*);
+
 #endif

@@ -534,3 +534,22 @@ int pre_reservation_request_check(char *pre_reservation_decision_str)
 
   return 0;
 }
+
+void reservation_update_pre_reservations(llist *reservation_list, llist *pre_reservation_list)
+{
+  lnode *current_node = pre_reservation_list->root;
+
+  while (current_node != NULL)
+  {
+    reservation *current_pre_reservation = (reservation*) current_node->value;
+
+    /* No collision, woo! */
+    if (!reservation_any_collision(current_pre_reservation, reservation_list))
+    {
+      llist_insert(reservation_list, current_pre_reservation);
+      llist_remove(pre_reservation_list, current_pre_reservation);
+    }
+
+    current_node = current_node->next;
+  }
+}
