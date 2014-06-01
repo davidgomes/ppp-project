@@ -215,7 +215,7 @@ void main_loop()
         clear_screen();
         printf("Programa feito por:\n");
 
-        printf("%s", COLOR_BLUE);
+        printf("%s", COLOR_GREEN);
 
         printf("      _             _     _                                   \n");
         printf("   __| | __ ___   _(_) __| |   __ _  ___  _ __ ___   ___  ___ \n");
