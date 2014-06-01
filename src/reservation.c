@@ -97,6 +97,7 @@ int reservation_request_listing(llist *reservation_list)
 
   if (((reservation*) reservation_list->root->value)->reservation_type == PRE_RESERVA)
   {
+    clear_screen();
     reservation_listing(reservation_list->root, 1);
     return 0;
   }
@@ -110,6 +111,7 @@ int reservation_request_listing(llist *reservation_list)
     }
   } while (reservation_request_check(&reservation_sort_order, which_order_str));
 
+  clear_screen();
   reservation_sort(reservation_list, reservation_sort_order);
 
   reservation_listing(reservation_list->root, 1);

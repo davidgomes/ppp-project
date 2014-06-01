@@ -68,7 +68,6 @@ void main_loop()
           break;
         }
 
-        clear_screen();
         int option_3_aux = reservation_request_listing(reservation_list);
 
         if (option_3_aux == 1)
@@ -93,7 +92,6 @@ void main_loop()
           break;
         }
 
-        clear_screen();
         int option_4_aux = reservation_request_listing(pre_reservation_list);
 
         if (option_4_aux == 1)
