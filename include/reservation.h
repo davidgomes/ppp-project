@@ -126,11 +126,6 @@ void reservation_update_pre_reservations(llist*, llist*);
 /**
  * Lists all reservations of a given client.
  */
-void reservation_list_reservations_by_client(client*, llist*);
-
-/**
- * Lists all reservations of a given client.
- */
-void reservation_list_pre_reservations_by_client(client*, llist*);
+void reservation_list_reservations_by_client(client*, llist*, int);
 
 #endif

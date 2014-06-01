@@ -144,6 +144,11 @@ void main_loop()
           printf("Não existem clientes.\n\n");
         }
 
+        if (llist_get_size(reservation_list) == 0)
+        {
+          printf("Não existem reservas.\n\n");
+        }
+        
         char client_name_str[MAX_NAME_SIZE];
         int option_6_aux = 1;
 
@@ -153,7 +158,41 @@ void main_loop()
 
         client *request_client = client_find_by_name(client_list, client_name_str);
 
-        reservation_list_reservations_by_client(request_client, reservation_list);
+        reservation_list_reservations_by_client(request_client, reservation_list, 0);
+
+        if (option_6_aux == 1)
+        {
+          printf("Nao conseguimos concluir a operação.\n");
+          break;
+        }
+        else if (option_6_aux == 2)
+        {
+          clear_screen();
+          break;
+        }
+      }
+      else if (which_option == 7)
+      {
+        if (llist_get_size(client_list) == 0)
+        {
+          printf("Não existem clientes.\n\n");
+        }
+
+        if (llist_get_size(pre_reservation_list) == 0)
+        {
+          printf("Não existem pré reservas.\n\n");
+        }
+        
+        char client_name_str[MAX_NAME_SIZE];
+        int option_6_aux = 1;
+
+        do {
+          option_6_aux = client_request_name(client_list, client_name_str);
+        } while (option_6_aux == 1);
+
+        client *request_client = client_find_by_name(client_list, client_name_str);
+
+        reservation_list_reservations_by_client(request_client, pre_reservation_list, 1);
 
         if (option_6_aux == 1)
         {

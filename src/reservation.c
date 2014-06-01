@@ -555,7 +555,8 @@ void reservation_update_pre_reservations(llist *reservation_list, llist *pre_res
   }
 }
 
-void reservation_list_reservations_by_client(client *request_client, llist *reservation_list)
+void reservation_list_reservations_by_client(client *request_client, llist *reservation_list,
+                                             int pre_reservations)
 {
   lnode *current_node = reservation_list->root;
   clear_screen();
@@ -566,11 +567,17 @@ void reservation_list_reservations_by_client(client *request_client, llist *rese
   {
     reservation *current_reservation = (reservation*) current_node->value;
 
-    printf("%s %s\n", current_reservation->client->name, request_client->name);
-    
     if (current_reservation->client == request_client)
     {
-      printf("%sListando reserva número %d\n", COLOR_CYAN, ++many_found);
+      if (!pre_reservations)
+      {
+        printf("%sListando reserva número %d\n", COLOR_CYAN, ++many_found);
+      }
+      else
+      {
+        printf("%sListando pré reserva número %d\n", COLOR_CYAN, ++many_found);        
+      }
+
       reset_color();
 
       reservation_print(current_reservation);
@@ -581,6 +588,13 @@ void reservation_list_reservations_by_client(client *request_client, llist *rese
 
   if (!many_found)
   {
-    printf("Não foram encontradas reservas associadas a este cliente.\n");
+    if (!pre_reservations)
+    {
+      printf("Não foram encontradas reservas associadas a este cliente.\n");
+    }
+    else
+    {
+      printf("Não foram encontradas pré reservas associadas a este cliente.\n");
+    }
   }
 }
