@@ -95,6 +95,12 @@ int reservation_request_listing(llist *reservation_list)
   char which_order_str[MAX_CHAR];
   int reservation_sort_order = -1;
 
+  if (((reservation*) reservation_list->root->value)->reservation_type == PRE_RESERVA)
+  {
+    reservation_listing(reservation_list->root, 1);
+    return 0;
+  }
+  
   do
   {
     if (get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
