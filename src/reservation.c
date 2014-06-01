@@ -554,6 +554,8 @@ void reservation_update_pre_reservations(llist *reservation_list, llist *pre_res
     current_node = current_node->next;
   }
 
+  printf("Uma ou mais pré-reservas foram movidas das pré-reservas para as reservas.\n");
+  
   write_reservations("reservations.txt", reservation_list);
   write_reservations("pre_reservations.txt", pre_reservation_list);
 }
