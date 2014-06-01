@@ -5,7 +5,8 @@ void main_loop()
   int which_option = -1;
 
   clear_screen();
-  printf("Quer voltar para o menu principal estando noutra localização? Insira '0'.\n");
+  printf("%sQuer voltar para o menu principal estando noutra localização? Insira '0'.\n", COLOR_GREEN);
+  reset_color();
 
   while (which_option != EXIT_OPTION)
   {
