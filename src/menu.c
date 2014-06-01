@@ -30,7 +30,7 @@ int menu_wait()
   int chosen_option;
   while ((get_int_input("Insira a sua opção: ", &chosen_option)) == 1)
   {
-    printf("Opção não válida\n");
+    printf("Opção não válida.\n");
   }
 
   if (chosen_option > 0 && chosen_option <= N_OPTIONS)

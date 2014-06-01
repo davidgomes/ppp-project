@@ -131,7 +131,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
     {
       return 2;
     }
-  } while(aux == 1);
+  } while (aux == 1);
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
@@ -195,22 +195,20 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
     time_to_str(&(find_collision->actual_time), collision_date);
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
-    // TODO Actually do shit about G/M
-
     do
     {
       get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",
                     pre_reservation_decision_str, MAX_CHAR);
-    } while ((pre_reservation_request_check(pre_reservation_decision_str)) == 1);
+    } while ((pre_reservation_request_check(pre_reservation_decision_str)));
 
-    if ((pre_reservation_request_check(pre_reservation_decision_str)) == 2)
+    if (!strcmp(pre_reservation_decision_str, "G"))
     {
-      return 2;
-    }
-    else
-    {
-      request_reservation->reservation_type = 4;
+      request_reservation->reservation_type = PRE_RESERVA;
       pre_reservation_request_new(pre_reservation_list, request_reservation);
+    }
+    else if (!strcmp(pre_reservation_decision_str, "M"))
+    {
+      reservation_request_new(reservation_list, client_list, pre_reservation_list);
     }
 
     return 0;
@@ -526,7 +524,7 @@ int pre_reservation_request_check(char *pre_reservation_decision_str)
   }
   else if (!strcmp(pre_reservation_decision_str, "M"))
   {
-    return 2;
+    return 0;
   }
   else
   {
