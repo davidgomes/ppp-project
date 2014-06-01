@@ -187,6 +187,8 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
     time_to_str(&(find_collision->actual_time), collision_date);
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
+    // TODO Actually do shit about G/M
+    
     do
     {
       get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",

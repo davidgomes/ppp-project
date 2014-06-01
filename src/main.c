@@ -21,13 +21,11 @@ void main_loop()
           printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-
         else if (option_1_aux == 2)
         {
           clear_screen();
           break;
         }
-
         else
         {
           clear_screen();
@@ -45,18 +43,15 @@ void main_loop()
           printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-
         else if (option_2_aux == 2)
         {
           clear_screen();
           break;
         }
-
         else
         {
           clear_screen();
           printf("Reserva cancelada com sucesso.\n\n");
-
         }
       }
       else if (which_option == 3)
@@ -68,18 +63,15 @@ void main_loop()
         {
           break;
         }
-
         else if (option_3_aux == 2)
         {
           clear_screen();
           break;
         }
-
         else
         {
 
         }
-
       }
       else if (which_option == 4)
       {
@@ -90,18 +82,15 @@ void main_loop()
         {
           break;
         }
-
         else if (option_4_aux == 2)
         {
           clear_screen();
           break;
         }
-
         else
         {
 
         }
-
       }
       else if (which_option == 5)
       {
@@ -113,18 +102,15 @@ void main_loop()
           printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-
         else if (option_5_aux == 2)
         {
           clear_screen();
           break;
         }
-
         else
         {
           clear_screen();
           printf("Reserva cancelada com sucesso.\n\n");
-
         }
       }
       else if (which_option == 6)
@@ -137,7 +123,6 @@ void main_loop()
           printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-
         else if (option_6_aux == 2)
         {
           clear_screen();
