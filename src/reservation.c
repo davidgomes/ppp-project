@@ -48,6 +48,7 @@ void reservation_print(reservation *which)
 
   printf("%sTrata-se de uma: ", COLOR_CYAN);
   reset_color();
+
   if (which->type == RESERVATION_TYPE_CLEANING)
   {
     printf("lavagem.\n");
@@ -82,7 +83,6 @@ void reservation_listing(lnode *where, int index)
     reset_color();
   }
 
-  
   reservation_print((reservation*) where->value);
 
   printf("\n");
@@ -102,8 +102,6 @@ int reservation_request_listing(llist *reservation_list)
     {
       return 2;
     }
-    
-
   } while (reservation_request_check(&reservation_sort_order, which_order_str));
 
   reservation_sort(reservation_list, reservation_sort_order);
@@ -116,13 +114,16 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
 {
   char request_client_name[MAX_NAME_SIZE];
   int aux;
-  do 
+
+  do
   {
     aux = get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
+
     if (aux == 2)
+    {
       return 2;
-  }
-  while(aux == 1);
+    }
+  } while(aux == 1);
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
@@ -142,14 +143,15 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   {
     if (get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
                       request_reservation_type_str, MAX_CHAR) == 2)
+    {
       return 2;
-
+    }
   } while (reservation_type_check(&request_reservation_type,
                                   request_reservation_type_str));
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
 
-  /*Here i set the reservation type as reserva */
+  /* Here i set the reservation type as reserva */
   request_reservation->reservation_type = 3;
 
   /* Get the current date for the registration date */
@@ -161,18 +163,18 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   do
   {
     date_aux = ask_date(&(request_reservation->actual_time));
+
     if (date_aux == 2)
     {
       return 2;
     }
-  }
-  while ( xtime_validate(&(request_reservation->actual_time)));
- 
+  } while (xtime_validate(&(request_reservation->actual_time)));
+
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
     clear_screen();
-    printf("Não pode reservar para o passado.\n\n"); 
+    printf("Não pode reservar para o passado.\n\n");
     return 1;
   }
 
@@ -195,7 +197,6 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
     {
       return 2;
     }
-
     else
     {
       request_reservation->reservation_type = 4;
@@ -439,7 +440,7 @@ void reservation_remove_outdated(llist *reservation_list)
   {
     if (xtime_comp(&(((reservation*) start->value)->actual_time), &current_xtime) < 0)
     {
-      llist_remove(reservation_list, start->value); 
+      llist_remove(reservation_list, start->value);
     }
 
     start = start->next;
