@@ -10,6 +10,7 @@
 #include "llist.h"
 #include "xtime.h"
 #include "colors.h"
+#include "main.h"
 
 /**
  * Lavagem.
@@ -20,6 +21,16 @@
  * Manutenção.
  */
 #define RESERVATION_TYPE_CHECKING 2
+
+/**
+ * Reserva.
+ */
+#define RESERVA 3
+
+/**
+ * Pré-Reserva.
+ */
+#define PRE_RESERVA 4
 
 /**
  * Allocates memory for and returns a new instance of a reservation.
@@ -100,5 +111,10 @@ int reservation_get_duration_mins(reservation*);
  * Finds out whether a given time collides with any reservation.
  */
 reservation *reservation_any_collision(reservation*, llist*);
+
+/**
+ * Function to protect the input of the option pre-reservation/change date.
+ */
+int pre_reservation_request_check(char*);
 
 #endif

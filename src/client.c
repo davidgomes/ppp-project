@@ -31,19 +31,25 @@ int client_request_print(llist *client_list)
 {
   char request_str[] = "Insira o nome do cliente: ";
   char client_name[MAX_NAME_SIZE];
-  get_str_input(request_str, client_name, MAX_NAME_SIZE);
+
+  if (get_str_input(request_str, client_name, MAX_NAME_SIZE) == 2)
+  {
+    return 2;
+  }
 
   client *found_client = client_find_by_name(client_list, client_name);
 
   if (found_client == NULL)
   {
     printf("Cliente não encontrado, verifique o nome introduzido.\n");
-    return 0;
+    return 1;
   }
   else
   {
     return client_print(found_client);
   }
+
+  return 0;
 }
 
 int client_print(client *which)
@@ -51,13 +57,13 @@ int client_print(client *which)
   if (which == NULL)
   {
     printf("Client não encontrado em client_print.\n");
-    return 0;
+    return 1;
   }
 
   printf("Printing information on %s\n", which->name);
   printf("%d\n", which->id);
 
-  return 1;
+  return 0;
 }
 
 void write_client(char *file, llist *client_list)

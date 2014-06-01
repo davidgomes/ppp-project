@@ -117,3 +117,23 @@ lnode *_llist_swap(lnode *l1, lnode *l2)
 
   return l2;
 }
+
+void _llist_destroy_rec(lnode *where)
+{
+  if (where == NULL)
+  {
+    return;
+  }
+
+  lnode *aux = where;
+
+  free(where);
+  _llist_destroy_rec(aux->next);
+}
+
+void llist_destroy(llist *my_llist)
+{
+  _llist_destroy_rec(my_llist->root);
+  free(my_llist);
+}
+  

@@ -70,8 +70,19 @@ void reservation_listing(lnode *where, int index)
     return;
   }
 
-  printf("%sListando reserva número %d\n", COLOR_CYAN, index);
-  reset_color();
+  reservation *aux = where->value;
+
+  if (aux->reservation_type == RESERVA)
+  {
+    printf("%sListando reserva número %d\n", COLOR_CYAN, index);
+    reset_color();
+  }
+  else if (aux->reservation_type == PRE_RESERVA)
+  {
+    printf("%sListando pré-reserva número %d\n", COLOR_CYAN, index);
+    reset_color();
+  }
+
   reservation_print((reservation*) where->value);
 
   printf("\n");
@@ -86,24 +97,33 @@ int reservation_request_listing(llist *reservation_list)
 
   do
   {
-    get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
-                  which_order_str, MAX_CHAR);
-
+    if (get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
+                      which_order_str, MAX_CHAR) == 2)
+    {
+      return 2;
+    }
   } while (reservation_request_check(&reservation_sort_order, which_order_str));
 
   reservation_sort(reservation_list, reservation_sort_order);
 
   reservation_listing(reservation_list->root, 1);
-  return 1;
+  return 0;
 }
 
 int reservation_request_new(llist *reservation_list, llist *client_list, llist *pre_reservation_list)
 {
   char request_client_name[MAX_NAME_SIZE];
-  while (get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE))
+  int aux;
+
+  do
   {
-    printf("Input incorreto.\n");
-  }
+    aux = get_str_input("Insira o nome do cliente: ", request_client_name, MAX_NAME_SIZE);
+
+    if (aux == 2)
+    {
+      return 2;
+    }
+  } while(aux == 1);
 
   client *request_client;
   request_client = client_find_by_name(client_list, request_client_name);
@@ -112,6 +132,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   {
     request_client = client_new(request_client_name);
     llist_insert(client_list, request_client);
+    write_client("clients.txt", client_list);
   }
 
   /* Asks the user for what type of a reservation it is. */
@@ -120,27 +141,40 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
 
   do
   {
-    get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
-                  request_reservation_type_str, MAX_CHAR);
-
+    if (get_str_input("Que tipo de serviço deseja, lavagem [L] ou manutenção [M]: ",
+                      request_reservation_type_str, MAX_CHAR) == 2)
+    {
+      return 2;
+    }
   } while (reservation_type_check(&request_reservation_type,
                                   request_reservation_type_str));
 
   reservation *request_reservation = reservation_new(request_client, request_reservation_type);
+
+  /* Here i set the reservation type as reserva */
+  request_reservation->reservation_type = 3;
 
   /* Get the current date for the registration date */
   time_t current_time = time(NULL);
   time_t_to_xtime(&(request_reservation->register_time), &current_time);
 
   /* Ask for desired date for the reservation */
-  while (ask_date(&(request_reservation->actual_time)) || xtime_validate(&(request_reservation->actual_time)))
+  int date_aux;
+  do
   {
-    printf("Por favor introduza uma data correta.\n");
-  }
+    date_aux = ask_date(&(request_reservation->actual_time));
+
+    if (date_aux == 2)
+    {
+      return 2;
+    }
+  } while (xtime_validate(&(request_reservation->actual_time)));
+
 
   if (xtime_comp(&(request_reservation->actual_time), &(request_reservation->register_time)) < 0)
   {
-    printf("Não pode reservar para o passado.\n");
+    clear_screen();
+    printf("Não pode reservar para o passado.\n\n");
     return 1;
   }
 
@@ -149,23 +183,33 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
   if (find_collision)
   {
     char collision_date[MAX_TIME_CHARS];
+    char pre_reservation_decision_str[MAX_CHAR];
     time_to_str(&(find_collision->actual_time), collision_date);
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
+    // TODO Actually do shit about G/M
+    
     do
     {
-      char pre_reservation_decision_str[MAX_CHAR];
       get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",
                     pre_reservation_decision_str, MAX_CHAR);
+    } while ((pre_reservation_request_check(pre_reservation_decision_str)) == 1);
 
-      // TODO Actually do shit about G/M, for now just always pre-reserve.
+    if ((pre_reservation_request_check(pre_reservation_decision_str)) == 2)
+    {
+      return 2;
+    }
+    else
+    {
+      request_reservation->reservation_type = 4;
       pre_reservation_request_new(pre_reservation_list, request_reservation);
-    } while (0);
+    }
 
     return 0;
   }
 
   llist_insert(reservation_list, request_reservation);
+  write_reservations("reservations.txt", reservation_list);
 
   printf("%p\n", request_client);
 
@@ -176,22 +220,30 @@ int reservation_request_cancel(llist *reservation_list)
 {
   printf("Listando todas as reservas.\n\n");
 
-  reservation_request_listing(reservation_list);
+  if (reservation_request_listing(reservation_list) == 2)
+  {
+    return 2;
+  }
 
   int which_reservation;
-  get_int_input("Insira o número da reserva que deseja cancelar: ",
-                &which_reservation);
+  if (get_int_input("Insira o número da reserva que deseja cancelar: ",
+                    &which_reservation) == 2)
+  {
+    return 2;
+  }
 
   if (which_reservation > llist_get_size(reservation_list) ||
       which_reservation < 1)
   {
     printf("Não existe um item correspondente ao número que escolheu.\n");
-    return 0;
+    return 1;
   }
 
   llist_remove_by_index(reservation_list, which_reservation - 1);
+  write_reservations("reservations.txt", reservation_list);
+  write_reservations("pre_reservations.txt", pre_reservation_list);
 
-  return 1;
+  return 0;
 }
 
 void write_reservations(char *file, llist *reservation_list)
@@ -210,8 +262,9 @@ void write_reservations(char *file, llist *reservation_list)
   {
     aux = where->value;
 
-    fprintf(fp, "%s, %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
+    fprintf(fp, "%s, %d %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n", aux->client->name,
             aux->type,
+            aux->reservation_type,
             aux->register_time.day,
             aux->register_time.month,
             aux->register_time.year,
@@ -247,8 +300,9 @@ void read_reservation(char *file, llist *client_list, llist *reservation_list)
     client = client_find_by_name(client_list, client_name);
     reservation = reservation_new(client, 1);
 
-    fscanf(fp, "%d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
+    fscanf(fp, "%d %d %d/%d/%d %d:%d, %d/%d/%d %d:%d\n",
            &(reservation->type),
+           &(reservation->reservation_type),
            &(reservation->register_time.day),
            &(reservation->register_time.month),
            &(reservation->register_time.year),
@@ -388,7 +442,7 @@ void reservation_remove_outdated(llist *reservation_list)
   {
     if (xtime_comp(&(((reservation*) start->value)->actual_time), &current_xtime) < 0)
     {
-      llist_remove(reservation_list, start->value); 
+      llist_remove(reservation_list, start->value);
     }
 
     start = start->next;
@@ -443,4 +497,34 @@ reservation *reservation_any_collision(reservation *which, llist *reservation_li
   }
 
   return NULL;
+}
+
+int pre_reservation_request_check(char *pre_reservation_decision_str)
+{
+  if (strlen(pre_reservation_decision_str) != SINGLE_INPUT_SIZE)
+  {
+    printf("O input nao tem o tamanho correto.\n");
+    return 1;
+  }
+
+  if (check_if_lower(pre_reservation_decision_str))
+  {
+    char_to_upper(pre_reservation_decision_str);
+  }
+
+  if (!strcmp(pre_reservation_decision_str, "G"))
+  {
+    return 0;
+  }
+  else if (!strcmp(pre_reservation_decision_str, "M"))
+  {
+    return 2;
+  }
+  else
+  {
+    printf("O input é incorreto.\n");
+    return 1;
+  }
+
+  return 0;
 }
