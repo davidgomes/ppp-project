@@ -547,12 +547,17 @@ void reservation_update_pre_reservations(llist *reservation_list, llist *pre_res
     /* No collision, woo! */
     if (!reservation_any_collision(current_pre_reservation, reservation_list))
     {
+      current_pre_reservation->reservation_type = RESERVA;
       llist_insert(reservation_list, current_pre_reservation);
+
       llist_remove(pre_reservation_list, current_pre_reservation);
     }
 
     current_node = current_node->next;
   }
+
+  write_reservations("reservations.txt", reservation_list);
+  write_reservations("pre_reservations.txt", pre_reservation_list);
 }
 
 void reservation_list_reservations_by_client(client *request_client, llist *reservation_list,
