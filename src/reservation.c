@@ -100,7 +100,7 @@ int reservation_request_listing(llist *reservation_list)
     reservation_listing(reservation_list->root, 1);
     return 0;
   }
-  
+
   do
   {
     if (get_str_input("Deseja ordenar por mais recentes [R] ou mais antigas [A]?: ",
@@ -194,7 +194,7 @@ int reservation_request_new(llist *reservation_list, llist *client_list, llist *
     printf("Foi encontrada uma reserva que colide com a sua a começar às: %s\n", collision_date);
 
     // TODO Actually do shit about G/M
-    
+
     do
     {
       get_str_input("Deseja [G]uardar a sua reserva na lista de pré-reservas ou [M]udar a data para outra que também lhe convenha: ",
