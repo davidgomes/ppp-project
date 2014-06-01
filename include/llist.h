@@ -83,12 +83,12 @@ int llist_get_size(llist*);
 lnode *_llist_swap(lnode *, lnode *);
 
 /**
- * Recursive function to destroy nodes of a llist
+ * Recursive function to destroy nodes of a llist.
  */
-void llist_destroy_rec(lnode*);
+void _llist_destroy_rec(lnode*);
 
 /**
- * Function that calls llist_destroy_rec and frees llist
+ * Function that calls llist_destroy_rec and frees llist.
  */
 void llist_destroy(llist*);
 

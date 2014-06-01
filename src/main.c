@@ -15,24 +15,24 @@ void main_loop()
       if (which_option == 1)
       {
         int option_1_aux = reservation_request_new(reservation_list, client_list, pre_reservation_list);
+
         if (option_1_aux == 1)
         {
-          printf("Nao conseguimos concluir a operaçao\n");
+          printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-        
+
         else if (option_1_aux == 2)
         {
           clear_screen();
           break;
         }
-        
+
         else
         {
           clear_screen();
-          
+
           printf("Reserva adicionada com sucesso.\n\n");
-          
         }
       }
       else if (which_option == 2)
@@ -40,36 +40,35 @@ void main_loop()
         int option_2_aux = reservation_request_cancel(reservation_list);
         clear_screen();
 
-       if (option_2_aux == 1)
+        if (option_2_aux == 1)
         {
-          printf("Nao conseguimos concluir a operaçao\n");
+          printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-        
+
         else if (option_2_aux == 2)
         {
           clear_screen();
           break;
         }
-        
+
         else
         {
           clear_screen();
           printf("Reserva cancelada com sucesso.\n\n");
-          
+
         }
       }
       else if (which_option == 3)
       {
         clear_screen();
         int option_3_aux = reservation_request_listing(reservation_list);
-        
 
         if (option_3_aux == 1)
         {
           break;
         }
-        
+
         else if (option_3_aux == 2)
         {
           clear_screen();
@@ -78,21 +77,20 @@ void main_loop()
 
         else
         {
-          
+
         }
-        
+
       }
       else if (which_option == 4)
       {
         clear_screen();
         int option_4_aux = reservation_request_listing(pre_reservation_list);
-        
 
         if (option_4_aux == 1)
         {
           break;
         }
-        
+
         else if (option_4_aux == 2)
         {
           clear_screen();
@@ -101,45 +99,45 @@ void main_loop()
 
         else
         {
-          
+
         }
-        
+
       }
       else if (which_option == 5)
       {
         int option_5_aux = reservation_request_cancel(pre_reservation_list);
         clear_screen();
-        
+
         if (option_5_aux == 1)
         {
-          printf("Nao conseguimos concluir a operaçao\n");
+          printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-        
+
         else if (option_5_aux == 2)
         {
           clear_screen();
           break;
         }
-        
+
         else
         {
           clear_screen();
           printf("Reserva cancelada com sucesso.\n\n");
-          
+
         }
       }
       else if (which_option == 6)
       {
         clear_screen();
         int option_6_aux = client_request_print(client_list);
-        
+
         if (option_6_aux == 1)
         {
-          printf("Nao conseguimos concluir a operaçao\n");
+          printf("Nao conseguimos concluir a operação.\n");
           break;
         }
-        
+
         else if (option_6_aux == 2)
         {
           clear_screen();

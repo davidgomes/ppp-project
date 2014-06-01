@@ -23,12 +23,12 @@
 #define RESERVATION_TYPE_CHECKING 2
 
 /**
- * Reserva
+ * Reserva.
  */
 #define RESERVA 3
 
 /**
- * Pré-Reserva
+ * Pré-Reserva.
  */
 #define PRE_RESERVA 4
 
@@ -113,8 +113,8 @@ int reservation_get_duration_mins(reservation*);
 reservation *reservation_any_collision(reservation*, llist*);
 
 /**
- * Function to protect the input of the option pre-reservation/change date
+ * Function to protect the input of the option pre-reservation/change date.
  */
-int pre_reservation_request_check(char *);
+int pre_reservation_request_check(char*);
 
 #endif

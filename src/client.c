@@ -31,7 +31,7 @@ int client_request_print(llist *client_list)
 {
   char request_str[] = "Insira o nome do cliente: ";
   char client_name[MAX_NAME_SIZE];
-  
+
   if (get_str_input(request_str, client_name, MAX_NAME_SIZE) == 2)
   {
     return 2;
@@ -48,6 +48,7 @@ int client_request_print(llist *client_list)
   {
     return client_print(found_client);
   }
+
   return 0;
 }
 
