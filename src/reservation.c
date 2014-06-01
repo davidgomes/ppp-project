@@ -238,7 +238,7 @@ int reservation_request_cancel(llist *reservation_list)
 
   llist_remove_by_index(reservation_list, which_reservation - 1);
   write_reservations("reservations.txt", reservation_list);
-  write_pre_reservations("pre_reservations.txt", pre_reservation_list);
+  write_reservations("pre_reservations.txt", pre_reservation_list);
 
   return 0;
 }
