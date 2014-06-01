@@ -95,6 +95,7 @@ int reservation_request_listing(llist *reservation_list)
   char which_order_str[MAX_CHAR];
   int reservation_sort_order = -1;
 
+  /* Pre reservations are always listed in descendent order */
   if (((reservation*) reservation_list->root->value)->reservation_type == PRE_RESERVA)
   {
     clear_screen();
@@ -551,5 +552,35 @@ void reservation_update_pre_reservations(llist *reservation_list, llist *pre_res
     }
 
     current_node = current_node->next;
+  }
+}
+
+void reservation_list_reservations_by_client(client *request_client, llist *reservation_list)
+{
+  lnode *current_node = reservation_list->root;
+  clear_screen();
+
+  int many_found = 0;
+
+  while (current_node != NULL)
+  {
+    reservation *current_reservation = (reservation*) current_node->value;
+
+    printf("%s %s\n", current_reservation->client->name, request_client->name);
+    
+    if (current_reservation->client == request_client)
+    {
+      printf("%sListando reserva número %d\n", COLOR_CYAN, ++many_found);
+      reset_color();
+
+      reservation_print(current_reservation);
+    }
+
+    current_node = current_node->next;
+  }
+
+  if (!many_found)
+  {
+    printf("Não foram encontradas reservas associadas a este cliente.\n");
   }
 }

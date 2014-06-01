@@ -7,27 +7,25 @@ client *client_new(char *name)
   return new_client;
 }
 
-client *_client_find_by_name_rec(lnode *where, char *find_name)
-{
-  if (where == NULL)
-  {
-    return NULL;
-  }
-
-  if (strcmp(((client*) where->value)->name, find_name) == 0)
-  {
-    return (client*) where->value;
-  }
-
-  return _client_find_by_name_rec(where->next, find_name);
-}
-
 client *client_find_by_name(llist *client_list, char *find_name)
 {
-  return _client_find_by_name_rec(client_list->root, find_name);
+  lnode *current_node = client_list->root;
+
+  while (current_node != NULL)
+  {
+    client *current_client = (client*) current_node->value;
+    if (!strcmp(current_client->name, find_name))
+    {
+      return current_client;
+    }
+    
+    current_node = current_node->next;
+  }
+
+  return NULL;
 }
 
-int client_request_print(llist *client_list)
+int client_request_name(llist *client_list, char *save_where)
 {
   char request_str[] = "Insira o nome do cliente: ";
   char client_name[MAX_NAME_SIZE];
@@ -44,24 +42,8 @@ int client_request_print(llist *client_list)
     printf("Cliente não encontrado, verifique o nome introduzido.\n");
     return 1;
   }
-  else
-  {
-    return client_print(found_client);
-  }
 
-  return 0;
-}
-
-int client_print(client *which)
-{
-  if (which == NULL)
-  {
-    printf("Client não encontrado em client_print.\n");
-    return 1;
-  }
-
-  printf("Printing information on %s\n", which->name);
-  printf("%d\n", which->id);
+  strcpy(save_where, client_name);
 
   return 0;
 }

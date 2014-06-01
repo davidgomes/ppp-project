@@ -139,8 +139,21 @@ void main_loop()
       }
       else if (which_option == 6)
       {
-        clear_screen();
-        int option_6_aux = client_request_print(client_list);
+        if (llist_get_size(client_list) == 0)
+        {
+          printf("Não existem clientes.\n\n");
+        }
+
+        char client_name_str[MAX_NAME_SIZE];
+        int option_6_aux = 1;
+
+        do {
+          option_6_aux = client_request_name(client_list, client_name_str);
+        } while (option_6_aux == 1);
+
+        client *request_client = client_find_by_name(client_list, client_name_str);
+
+        reservation_list_reservations_by_client(request_client, reservation_list);
 
         if (option_6_aux == 1)
         {

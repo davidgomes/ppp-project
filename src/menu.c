@@ -7,8 +7,9 @@ void menu_load()
   options[2] = "Listar reservas";
   options[3] = "Listar pré-reservas";
   options[4] = "Cancelar pré_reservas";
-  options[5] = "Listar informação de um cliente";
-  options[6] = "Sair do programa";
+  options[5] = "Listar reservas de um cliente";
+  options[6] = "Listar pré-reservas de um cliente";
+  options[7] = "Sair do programa";
 }
 
 void menu_show()

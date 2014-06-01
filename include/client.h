@@ -7,6 +7,7 @@
 
 #include "utils.h"
 #include "llist.h"
+#include "colors.h"
 
 #define MAX_NAME_SIZE 128
 
@@ -25,11 +26,6 @@ typedef struct client
 client *client_new(char*);
 
 /**
- * Recursive function to find a client by name.
- */
-client *_client_find_by_name_rec(lnode*, char*);
-
-/**
  * Finds a client by its name.
  */
 client *client_find_by_name(llist*, char*);
@@ -37,12 +33,7 @@ client *client_find_by_name(llist*, char*);
 /**
  * Handles user asking to print a client.
  */
-int client_request_print(llist*);
-
-/**
- * Prints the information on a given client.
- */
-int client_print(client*);
+int client_request_name(llist*, char*);
 
 /**
  * Write all clients to a file.
