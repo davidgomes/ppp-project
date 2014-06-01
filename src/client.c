@@ -79,8 +79,8 @@ void read_client(char *file, llist *client_list)
 
   if ((fp = fopen(file, "r")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro");
-    return ;
+    fprintf(stderr, "Ocorreu um erro.\n");
+    return;
   }
 
   while (fscanf(fp, "%[^,], %d\n", client_name, &client_id) == 2)
