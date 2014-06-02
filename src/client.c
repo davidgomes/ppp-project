@@ -56,7 +56,7 @@ void write_client(char *file, llist *client_list)
 
   if ((fp = fopen(file, "w")) == NULL)
   {
-    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro");
+    fprintf(stderr, "Ocorreu um erro na abertura do ficheiro.\n");
     return;
   }
 

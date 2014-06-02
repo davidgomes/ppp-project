@@ -4,6 +4,7 @@
 llist *llist_new()
 {
   llist *new_list = (llist*) malloc(sizeof(llist));
+  new_list->root = NULL;
   return new_list;
 }
 
@@ -11,6 +12,7 @@ lnode *lnode_new(void *value)
 {
   lnode *new_node = (lnode*) malloc(sizeof(lnode));
   new_node->value = value;
+  new_node->next = NULL;
   return new_node;
 }
 
