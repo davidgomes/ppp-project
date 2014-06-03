@@ -138,4 +138,3 @@ void llist_destroy(llist *my_llist)
   _llist_destroy_rec(my_llist->root);
   free(my_llist);
 }
-  
