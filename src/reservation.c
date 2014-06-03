@@ -346,7 +346,7 @@ lnode *_reservation_sort_rec(lnode *start, int order)
     if (start->next != NULL && xtime_comp(&(((reservation*) start->value)->actual_time),
                                           &(((reservation*) start->next->value)->actual_time)) < 0)
     {
-      start = _llist_swap(start, start->next );
+      start = _llist_swap(start, start->next);
     }
   }
 
