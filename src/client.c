@@ -14,6 +14,7 @@ client *client_find_by_name(llist *client_list, char *find_name)
   while (current_node != NULL)
   {
     client *current_client = (client*) current_node->value;
+
     if (!strcmp(current_client->name, find_name))
     {
       return current_client;
@@ -63,7 +64,7 @@ void write_client(char *file, llist *client_list)
   while (where != NULL)
   {
     node_value = where->value;
-    fprintf(fp, "%s, %d\n",node_value->name, node_value->id);
+    fprintf(fp, "%s, %d\n", node_value->name, node_value->id);
     where = where->next;
   }
 
